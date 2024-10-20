@@ -1,0 +1,80 @@
+table users {
+  id uuid [primary key]
+  login varchar(32) [unique]
+  password_hash varchar 
+  tg_id bigint [unique]
+  username varchar(32)
+  first_name varchar(64) [not null]
+  last_name varchar(64)
+}
+
+table universities {
+  id uuid [primary key]
+  name varchar(64) [not null]
+}
+
+table departments {
+  id uuid [primary key]
+  university_id uuid [ref: > universities.id]
+  name varchar(64) [not null]
+  position position
+}
+
+table groups {
+  id uuid [primary key]
+  university_id uuid [ref: > universities.id]
+  department_id uuid [ref: > departments.id]
+  administrator_id uuid [ref: > users.id]
+  name varchar [not null]
+}
+
+table template_slots {
+  id uuid [primary key]
+  user_id uuid [ref: > users.id]
+  department_id uuid [ref: > departments.id]
+  start_time time [not null]
+  end_time time [not null]
+  class_number integer [not null]
+}
+
+table assignments {
+  id uuid [primary key]
+  class_id uuid [ref: > classes.id]
+  class_type class_type // lecture/seminar
+  mode mode             // online/offline
+  weekday weekday [not null]
+  lecturer varchar      // name
+  building varchar      // korpus
+  room_number varchar   // ауд.261
+  start_time timedelta [not null]
+  end_time timedelta [not null]
+  type_ enum [not null] // special/chyselnyk/znamennyk 
+  date_ date
+}
+
+
+table schedules {
+  id uuid [primary key]
+  fork_scedule_id uuid [ref: > schedules.id]
+  auto_update bool [not null]
+  name varchar [not null]
+  group_id uuid [ref: > groups.id]
+  user_id uuid [ref: > users.id]
+}
+
+table classes {
+  id uuid [primary key]
+  group_id uuid [ref: > groups.id]
+  user_id uuid [ref: > users.id]
+  name varchar [not null]
+
+}
+table scedule_assignments{
+  assignment_id uuid [ref: > assignments.id]
+  scedule_id uuid [ref: > schedules.id]
+}
+table user_schedules{
+  user_id uuid [ref: > users.id]
+  scedule_id uuid [ref: > schedules.id]
+  notify bool [not null]
+}
