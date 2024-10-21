@@ -25,9 +25,9 @@ public class Assignment
     [Required]
     public string Weekday { get; set; }
 
-    public string Lecturer { get; set; }
-    public string Building { get; set; }
-    public string RoomNumber { get; set; }
+    public string? Lecturer { get; set; }
+    public string? Building { get; set; }
+    public string? RoomNumber { get; set; }
 
     [Required]
     public TimeSpan StartTime { get; set; }

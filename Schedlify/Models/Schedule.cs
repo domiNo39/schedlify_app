@@ -11,6 +11,8 @@ public class Schedule
     [Key]
     public Guid Id { get; set; }
 
+    
+    [ForeignKey("ForkSchedule")]
     public Guid? ForkScheduleId { get; set; }
     public Schedule ForkSchedule { get; set; }
 
