@@ -27,6 +27,7 @@ public enum Weekday
 public enum AssignmentType
 {
     Special,
+    Regular,
     Chyselnyk,
     Znamennyk
 }
