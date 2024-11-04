@@ -28,6 +28,6 @@ public enum AssignmentType
 {
     Special,
     Regular,
-    Chyselnyk,
-    Znamennyk
+    Even,
+    Odd
 }
