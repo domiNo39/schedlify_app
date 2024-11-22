@@ -22,11 +22,12 @@ public class UniversityRepository
     }
 
     // Get university by name
-    public University? GetByName(string name)
+    public IEnumerable<University> GetByNamePart(string name)
     {
         return _context.Universities
-            .Include(u => u.Departments)  // Include related departments
-            .FirstOrDefault(u => u.Name == name);  // Find the university by name
+            .Include(u => u.Departments)
+            .Where(u => u.Name.ToLower().Contains(name.ToLower()))
+            .ToList(); // Search by name substring=
     }
 
     // Add a new university
