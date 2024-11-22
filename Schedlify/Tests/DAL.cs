@@ -8,7 +8,7 @@ public class RepoTests
 {
     public static void TestUserRepo()
     {
-        ApplicationDbContext context = DbContextFactory.CreateDbContext();
+        ApplicationDbContext context = ApplicationDbContextFactory.CreateDbContext();
         UserRepository userRepository = new UserRepository(context);
         userRepository.Add("admin@admin.com", "superhash");
         User? user = userRepository.GetByLogin("admin@admin.com");
