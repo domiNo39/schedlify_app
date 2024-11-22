@@ -2,17 +2,51 @@
 using Microsoft.EntityFrameworkCore;
 using Schedlify.Models;
 using DotNetEnv;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Schedlify.Data
 {
+    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    {
+        public ApplicationDbContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+
+            // Âèêîðèñòîâóéòå òîé ñàìèé ìåòîä äëÿ îòðèìàííÿ ðÿäêà ï³äêëþ÷åííÿ
+            var connectionString = DbConnectionHelper.GetConnectionString();
+
+            optionsBuilder.UseNpgsql(connectionString);
+
+            return new ApplicationDbContext(optionsBuilder.Options);
+        }
+    }
+    public static class DbConnectionHelper
+    {
+        public static string GetConnectionString()
+        {
+            // Çàâàíòàæåííÿ çì³ííèõ ñåðåäîâèùà, ÿêùî ùå íå çðîáëåíî
+            Schedlify.Program.LoadEnv();
+
+            // Ç÷èòóâàííÿ ïàðàìåòð³â ï³äêëþ÷åííÿ
+            var host = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost";
+            var port = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
+            var database = Environment.GetEnvironmentVariable("DB_NAME") ?? "my_database";
+            var username = Environment.GetEnvironmentVariable("DB_USER") ?? "my_user";
+            var password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "my_password";
+
+            // Ôîðìóâàííÿ ðÿäêà ï³äêëþ÷åííÿ
+            return $"Host={host};Port={port};Database={database};Username={username};Password={password}";
+        }
+    }
     public class ApplicationDbContext : DbContext
     {
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
             // Ensure that the .env file is loaded during DbContext construction
-            DotNetEnv.Env.Load(".env.local");
+            Schedlify.Program.LoadEnv();
         }
 
         
@@ -122,7 +156,7 @@ namespace Schedlify.Data
         }
     }
     
-    public static class DbContextFactory
+    public static class ApplicationDbContextFactory
     {
         public static ApplicationDbContext CreateDbContext()
         {
