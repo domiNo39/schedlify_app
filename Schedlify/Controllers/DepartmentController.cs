@@ -19,7 +19,7 @@ namespace Schedlify.Controllers
         }
         public IEnumerable<Department> Search(Guid universityId,string namePart)
         {
-            var departments = departmentRepository.GetByUniversityIdAndNamePart(universityId, namePart);
+            var departments = departmentRepository.GetByNamePartAndUniversityId(universityId, namePart);
             return departments;
         }
         public Department? Add(Guid universityId, string namePart)
