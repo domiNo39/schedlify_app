@@ -21,6 +21,8 @@ public class Program
         Env.Load(envPath);
 
     }
+
+    [STAThread] // Додаємо цей атрибут
     public static void Main(string[] args)
     {
       LoadEnv();
