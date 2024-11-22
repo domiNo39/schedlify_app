@@ -12,7 +12,7 @@ namespace Schedlify.Data
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-            // Використовуйте той самий метод для отримання рядка підключення
+            // Г‚ГЁГЄГ®Г°ГЁГ±ГІГ®ГўГіГ©ГІГҐ ГІГ®Г© Г±Г Г¬ГЁГ© Г¬ГҐГІГ®Г¤ Г¤Г«Гї Г®ГІГ°ГЁГ¬Г Г­Г­Гї Г°ГїГ¤ГЄГ  ГЇВіГ¤ГЄГ«ГѕГ·ГҐГ­Г­Гї
             var connectionString = DbConnectionHelper.GetConnectionString();
 
             optionsBuilder.UseNpgsql(connectionString);
@@ -24,17 +24,17 @@ namespace Schedlify.Data
     {
         public static string GetConnectionString()
         {
-            // Завантаження змінних середовища, якщо ще не зроблено
+            // Г‡Г ГўГ Г­ГІГ Г¦ГҐГ­Г­Гї Г§Г¬ВіГ­Г­ГЁГµ Г±ГҐГ°ГҐГ¤Г®ГўГЁГ№Г , ГїГЄГ№Г® Г№ГҐ Г­ГҐ Г§Г°Г®ГЎГ«ГҐГ­Г®
             Schedlify.Program.LoadEnv();
 
-            // Зчитування параметрів підключення
+            // Г‡Г·ГЁГІГіГўГ Г­Г­Гї ГЇГ Г°Г Г¬ГҐГІГ°ВіГў ГЇВіГ¤ГЄГ«ГѕГ·ГҐГ­Г­Гї
             var host = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost";
             var port = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
             var database = Environment.GetEnvironmentVariable("DB_NAME") ?? "my_database";
             var username = Environment.GetEnvironmentVariable("DB_USER") ?? "my_user";
             var password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "my_password";
 
-            // Формування рядка підключення
+            // Г”Г®Г°Г¬ГіГўГ Г­Г­Гї Г°ГїГ¤ГЄГ  ГЇВіГ¤ГЄГ«ГѕГ·ГҐГ­Г­Гї
             return $"Host={host};Port={port};Database={database};Username={username};Password={password}";
         }
     }
