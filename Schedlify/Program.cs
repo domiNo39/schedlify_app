@@ -1,31 +1,21 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Schedlify.Data;
+﻿using Schedlify.Tests;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace Schedlify;
+using DotNetEnv;
 
-// Load environment variables from .env.local
-DotNetEnv.Env.Load(".env.local");
-
-// Configure Entity Framework to use PostgreSQL
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+public class Program
 {
-    var host = Environment.GetEnvironmentVariable("DB_HOST");
-    var port = Environment.GetEnvironmentVariable("DB_PORT");
-    var database = Environment.GetEnvironmentVariable("DB_NAME");
-    var username = Environment.GetEnvironmentVariable("DB_USER");
-    var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+    public static void LoadEnv()
+    {
+        var projectDir = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
+        var envPath = Path.Combine(projectDir, ".env.local");
+        Env.Load(envPath);
 
-    var connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password}";
+    }
+    public static void Main(string[] args)
+    {
+        LoadEnv();
+        RepoTests.Run();
+    }
+}
 
-    options.UseNpgsql(connectionString);
-});
-
-// Add other services here
-// builder.Services.AddControllers(); // Example
-
-var app = builder.Build();
-
-// Configure middleware, etc.
-app.Run();
