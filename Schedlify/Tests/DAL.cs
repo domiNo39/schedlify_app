@@ -11,7 +11,7 @@ public class RepoTests
 
     public static void TestUserRepo()
     {
-        _context = DbContextFactory.CreateDbContext();
+        _context = ApplicationDbContextFactory.CreateDbContext();
         using var transaction = _context.Database.BeginTransaction();
 
         UserRepository userRepository = new UserRepository(_context);
@@ -24,7 +24,7 @@ public class RepoTests
 
     public static void TestUniRepo()
     {
-        _context = DbContextFactory.CreateDbContext();
+        _context = ApplicationDbContextFactory.CreateDbContext();
         using var transaction = _context.Database.BeginTransaction();
 
         UniversityRepository universityRepository = new UniversityRepository(_context);
@@ -37,7 +37,7 @@ public class RepoTests
 
     public static void TestDepartmentRepo()
     {
-        _context = DbContextFactory.CreateDbContext();
+        _context = ApplicationDbContextFactory.CreateDbContext();
         using var transaction = _context.Database.BeginTransaction();
 
         UniversityRepository universityRepository = new UniversityRepository(_context);
@@ -53,7 +53,7 @@ public class RepoTests
 
     public static void TestGroupRepo()
     {
-        _context = DbContextFactory.CreateDbContext();
+        _context = ApplicationDbContextFactory.CreateDbContext();
         using var transaction = _context.Database.BeginTransaction();
         
         UniversityRepository universityRepository = new UniversityRepository(_context);
