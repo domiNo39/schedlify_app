@@ -47,14 +47,15 @@ public class GroupRepository
     }
 
     // Get groups by name part (substring search)
-    public IEnumerable<Group> GetByNamePart(string name)
+    public IEnumerable<Group> GetByNamePartAndDepartmentId(string name, Guid departmentId)
     {
         return _context.Groups
             .Include(g => g.Department)
             .Include(g => g.Administrator)
             .Include(g => g.Assignments)
             .Include(g => g.Classes)
-            .Where(g => g.Name.ToLower().Contains(name.ToLower())) // Search by name substring
+            .Where(g => g.Name.ToLower().Contains(name.ToLower()))
+            .Where(g => g.DepartmentId == departmentId)// Search by name substring
             .ToList();
     }
 

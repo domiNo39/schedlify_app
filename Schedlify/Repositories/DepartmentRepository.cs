@@ -45,7 +45,7 @@ public class DepartmentRepository
     }
 
     // Get departments by name part and uni ID
-    public IEnumerable<Department> GetByUniversityIdAndNamePart(Guid universityId, string name)
+    public IEnumerable<Department> GetByNamePartAndUniversityId(Guid universityId, string name)
     {
         return _context.Departments
             .Include(d => d.Groups)
