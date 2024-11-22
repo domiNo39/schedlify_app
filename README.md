@@ -2,6 +2,7 @@
 
 
 # Database
+```dotnet ef migrations add MigrationName --context ApplicationDbContext``` - Create migration
 
 ```dotnet ef database update --context ApplicationDbContext``` - Apply migrations
 
