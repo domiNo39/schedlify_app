@@ -68,8 +68,11 @@ public class RepoTests
         
         Group group = groupRepository.Add(department.Id, admin.Id, "PMI-35");
         group = groupRepository.GetById(group.Id);
+        Console.WriteLine(group.Department.University is not null);
         Console.WriteLine(group is not null);
         
+        IEnumerable<Group> groups = groupRepository.GetByNamePartAndDepId("PMI", department.Id);
+        Console.WriteLine(groups.Any());
         transaction.Rollback(); // Roll back changes after test
     }
 
