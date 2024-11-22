@@ -10,6 +10,7 @@ using Schedlify.Tests;
 
 namespace Schedlify;
 using DotNetEnv;
+using System.Runtime.InteropServices;
 
 public class Program
 {
@@ -23,6 +24,7 @@ public class Program
     public static void Main(string[] args)
     {
       LoadEnv();
+
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
 

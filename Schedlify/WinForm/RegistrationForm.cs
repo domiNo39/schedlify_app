@@ -1,10 +1,18 @@
-﻿namespace Schedlify.WinForm
+﻿using System;
+using System.Windows.Forms;
+using Schedlify.Controllers;
+using Schedlify.Models;
+
+namespace Schedlify.WinForm
 {
     public partial class RegistrationForm : Form
     {
+        private UsersController _usersController;
+
         public RegistrationForm()
         {
             InitializeComponent();
+            _usersController = new UsersController();
         }
 
         // Обробник події для кнопки "Створити аккаунт"
@@ -19,14 +27,20 @@
                 return;  // Виходимо, якщо хоча б одне з полів порожнє
             }
 
-            // Тут можна додати логіку для перевірки наявності користувача або створення нового акаунта
-            // Наприклад, звернення до бази даних або локального сховища
+            // Викликаємо метод Register з UsersController
+            User? newUser = _usersController.Register(login, password);
 
-            // Для прикладу, просто виводимо повідомлення
-            MessageBox.Show($"Логін: {login}\nПароль: {password}", "Реєстрація успішна", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Тут можна, наприклад, закрити форму або перейти до іншої
-            // this.Close(); // Закриваємо форму після успішної реєстрації
+            if (newUser != null)
+            {
+                // Реєстрація успішна
+                MessageBox.Show("Реєстрація успішна! Ваш акаунт створено.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close(); // Закриваємо форму після успішної реєстрації
+            }
+            else
+            {
+                // Реєстрація не вдалася (можливо, логін вже існує)
+                MessageBox.Show("Реєстрація не вдалася. Логін вже використовується.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
