@@ -21,6 +21,14 @@ public class UniversityRepository
             .FirstOrDefault(u => u.Id == universityId);  // Find the university by ID
     }
 
+    // Get university by Name
+    public University? GetByName(string name)
+    {
+        return _context.Universities
+            .Include(u => u.Departments)  // Include related departments
+            .FirstOrDefault(u => u.Name == name);  // Find the university by ID
+    }
+
     // Get university by name
 
     public IEnumerable<University> GetByNamePart(string name)

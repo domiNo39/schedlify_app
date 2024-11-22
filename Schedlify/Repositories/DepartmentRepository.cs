@@ -44,6 +44,18 @@ public class DepartmentRepository
             .ToList();
     }
 
+    // Get departments by name part and uni ID
+    public IEnumerable<Department> GetByUniversityIdAndNamePart(Guid universityId, string name)
+    {
+        return _context.Departments
+            .Include(d => d.Groups)
+            .Include(d => d.TemplateSlots)
+            .Where(d => d.UniversityId == universityId)
+            .Where(d => d.Name.ToLower().Contains(name.ToLower()))
+            .ToList();
+    }
+
+
     // Add a new department
     public Department Add(Guid universityId, string name)
     {
