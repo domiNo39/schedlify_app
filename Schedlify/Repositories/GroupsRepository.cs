@@ -36,14 +36,13 @@ public class GroupRepository
     }
 
     // Get groups by administrator ID
-    public IEnumerable<Group> GetByAdministratorId(Guid administratorId)
+    public Group? GetByAdministratorId(Guid administratorId)
     {
         return _context.Groups
             .Include(g => g.Department)
             .Include(g => g.Assignments)
             .Include(g => g.Classes)
-            .Where(g => g.AdministratorId == administratorId)
-            .ToList();  // Retrieve groups by administrator ID
+            .FirstOrDefault(g => g.AdministratorId == administratorId);
     }
 
     // Get groups by name part (substring search)

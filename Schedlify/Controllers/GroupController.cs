@@ -27,5 +27,10 @@ namespace Schedlify.Controllers
             var newGroup = groupRepository.Add(departmentId, administratorId, namePart);
             return newGroup;
         }
+        public Group? GetByAdministratorId(Guid administratorId)
+        {
+            var group = groupRepository.GetByAdministratorId(administratorId);
+            return group;
+        }
     }
 }
