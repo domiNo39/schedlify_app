@@ -1,6 +1,7 @@
 // Data/ApplicationDbContext.cs
 using Microsoft.EntityFrameworkCore;
 using Schedlify.Models;
+using DotNetEnv;
 
 namespace Schedlify.Data
 {

@@ -1,7 +1,7 @@
 using Schedlify.Data;
 using Schedlify.Models;
 
-namespace Schedlify.DAL;
+namespace Schedlify.Repositories;
 
 public class UserRepository
 {
