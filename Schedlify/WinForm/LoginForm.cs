@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Schedlify.Controllers;
+using Schedlify.Global;
 
 namespace Schedlify.WinForm
 {
@@ -33,6 +34,7 @@ namespace Schedlify.WinForm
             if (user != null)
             {
                 // Авторизація успішна
+                UserSession.CurrentUser = user;
                 MessageBox.Show("Успішний вхід! Ласкаво просимо.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Переходимо до UniDepGroupForm
