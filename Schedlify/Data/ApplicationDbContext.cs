@@ -120,4 +120,23 @@ namespace Schedlify.Data
             }
         }
     }
+    
+    public static class DbContextFactory
+    {
+        public static ApplicationDbContext CreateDbContext()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            var host = Environment.GetEnvironmentVariable("DB_HOST");
+            var port = Environment.GetEnvironmentVariable("DB_PORT");
+            var database = Environment.GetEnvironmentVariable("DB_NAME");
+            var username = Environment.GetEnvironmentVariable("DB_USER");
+            var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+
+            var connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password}";
+
+            optionsBuilder.UseNpgsql(connectionString);
+            return new ApplicationDbContext(optionsBuilder.Options);
+        }
+    }
+    
 }
