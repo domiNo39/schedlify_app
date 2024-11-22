@@ -18,6 +18,13 @@ namespace Schedlify.WinForm
             this.Close(); // Закриваємо основне вікно
         }
 
+        private void logButton_Click(object sender, EventArgs e)
+        {
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
+            this.Close(); // Закриваємо головне вікно
+        }
+
     }
 }
 

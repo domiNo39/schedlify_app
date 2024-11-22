@@ -34,7 +34,14 @@ namespace Schedlify.WinForm
             {
                 // Реєстрація успішна
                 MessageBox.Show("Реєстрація успішна! Ваш акаунт створено.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close(); // Закриваємо форму після успішної реєстрації
+                //this.Close(); // Закриваємо форму після успішної реєстрації
+                // Закриваємо поточне вікно
+                this.Hide();
+
+                // Відкриваємо форму UniDepGroupForm
+                var uniDepGroupForm = new UniDepGroupForm();
+                uniDepGroupForm.FormClosed += (s, args) => this.Close(); // Закриваємо RegistrationForm після закриття UniDepGroupForm
+                uniDepGroupForm.Show();
             }
             else
             {

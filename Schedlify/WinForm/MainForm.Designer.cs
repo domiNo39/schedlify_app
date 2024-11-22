@@ -104,6 +104,9 @@
             };
             this.Controls.Add(registerButton);
 
+            // Прив'язка обробника події до кнопки "Увійти"
+            loginButton.Click += new System.EventHandler(this.loginButton_Click);
+
             // Прив'язка обробника події до кнопки "Реєстрація"
             registerButton.Click += new System.EventHandler(this.registrationButton_Click);
 
@@ -126,6 +129,13 @@
 
             // (Необов'язково) Закриваємо поточне вікно, якщо не хочемо, щоб воно залишалося відкритим
             this.Hide(); // Приховуємо головне вікно
+        }
+
+        private void loginButton_Click(object sender, EventArgs e)
+        {
+            LoginForm loginForm = new LoginForm();
+            loginForm.Show();
+            this.Hide(); // Закриваємо головне вікно
         }
     }
 }
