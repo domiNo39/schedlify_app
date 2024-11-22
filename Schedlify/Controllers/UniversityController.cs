@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Schedlify.Data;
 using Schedlify.Repositories;
-using Microsoft.AspNetCore.Identity.Data;
 using Schedlify.Models;
 
 namespace Schedlify.Controllers

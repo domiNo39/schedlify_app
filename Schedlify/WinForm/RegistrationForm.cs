@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using Schedlify.Controllers;
 using Schedlify.Models;
+using Schedlify.Global;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace Schedlify.WinForm
 {
@@ -28,11 +30,12 @@ namespace Schedlify.WinForm
             }
 
             // Викликаємо метод Register з UsersController
-            User? newUser = _usersController.Register(login, password);
+            var newUser = _usersController.Register(login, password);
 
             if (newUser != null)
             {
                 // Реєстрація успішна
+                UserSession.CurrentUser = newUser;
                 MessageBox.Show("Реєстрація успішна! Ваш акаунт створено.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //this.Close(); // Закриваємо форму після успішної реєстрації
                 // Закриваємо поточне вікно
