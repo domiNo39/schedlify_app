@@ -24,7 +24,7 @@
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
       <PackageReference Include="System.Windows.Forms" Version="4.0.0" />
-      <PackageReference Include="Microsoft.Windows.Compatibility" Version="5.0.2" />
+      <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.0" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.1" />
     </ItemGroup>
 </Project>
