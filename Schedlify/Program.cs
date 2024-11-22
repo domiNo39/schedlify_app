@@ -2,13 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Schedlify.Data;
+using System;
+using System.Windows.Forms;
+using Schedlify.WinForm;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Load environment variables from .env.local
+// Завантажуємо змінні середовища з .env.local
 DotNetEnv.Env.Load(".env.local");
 
-// Configure Entity Framework to use PostgreSQL
+// Конфігурація Entity Framework для роботи з PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var host = Environment.GetEnvironmentVariable("DB_HOST");
@@ -22,10 +25,24 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString);
 });
 
-// Add other services here
-// builder.Services.AddControllers(); // Example
-
 var app = builder.Build();
 
-// Configure middleware, etc.
-app.Run();
+// Перевірка, чи працює програма в інтерактивному режимі
+if (Environment.UserInteractive)
+{
+    // Ініціалізація Windows Forms інтерфейсу
+    Application.EnableVisualStyles();
+    Application.SetCompatibleTextRenderingDefault(false);
+
+    // Створення та запуск основної форми Windows Forms
+    var mainForm = new MainForm();
+    Application.Run(mainForm); // Запускаємо основну форму Windows Forms
+
+    // Веб-додаток продовжує працювати після закриття форми (не обов'язково)
+    // Якщо потрібно, можна додати додаткову логіку тут
+}
+else
+{
+    // Якщо не інтерактивний режим, запускаємо веб-застосунок
+    app.Run(); // Запуск веб-додатку
+}
