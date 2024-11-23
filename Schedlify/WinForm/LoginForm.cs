@@ -49,7 +49,7 @@ namespace Schedlify.WinForm
                 {
                     UserSession.currentGroup = group;
                     UserSession.currentDepartment = group.Department;
-                    var timeSlots = _templateSlotController.GetByDepartmentId(group.Id);
+                    var timeSlots = _templateSlotController.GetByDepartmentId(group.DepartmentId);
                     if (!timeSlots.IsNullOrEmpty())
                     {
                         ScheduleForm scheduleForm = new ScheduleForm();
