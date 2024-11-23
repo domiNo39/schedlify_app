@@ -34,7 +34,7 @@ namespace Schedlify.WinForm
             if (user != null)
             {
                 // Авторизація успішна
-                UserSession.CurrentUser = user;
+                UserSession.currentUser = user;
                 MessageBox.Show("Успішний вхід! Ласкаво просимо.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // Переходимо до UniDepGroupForm

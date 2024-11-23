@@ -11,12 +11,14 @@ namespace Schedlify.WinForm
     {
         private readonly UniversityController _universityController;
         private readonly DepartmentController _departmentController;
+        private readonly GroupController _groupController;
 
         public UniDepGroupForm()
         {
             InitializeComponent();
             _universityController = new UniversityController();
             _departmentController = new DepartmentController();
+            _groupController = new GroupController();
 
             universityComboBox.TextChanged += UniversityComboBox_TextChanged;
             departmentComboBox.TextChanged += DepartmentComboBox_TextChanged;
@@ -44,6 +46,24 @@ namespace Schedlify.WinForm
             {
                 var departments = _departmentController.Search(selectedUniversity.Id, input).ToList();
                 return departments.Select(d => d.Name).ToArray();
+            });
+        }
+
+        private void GroupComboBox_TextChanged(object sender, EventArgs e)
+        {
+            if (departmentComboBox.SelectedItem == null)
+                return;
+
+            var selectedUniversity = _universityController.Search(universityComboBox.Text).FirstOrDefault();
+            var selectedDepartment = _departmentController.Search(selectedUniversity.Id, departmentComboBox.Text).FirstOrDefault();
+
+            if (selectedDepartment == null)
+                return;
+
+            UpdateComboBox(groupComboBox, input =>
+            {
+                var groups = _groupController.Search(selectedDepartment.Id, input).ToList();
+                return groups.Select(g => g.Name).ToArray();
             });
         }
 
@@ -95,10 +115,19 @@ namespace Schedlify.WinForm
             string selectedDepartment = departmentComboBox.Text;
             string selectedGroup = groupComboBox.Text;
 
-            //var university = _universityController.Add(selectedUniversity);
-            //var department = _departmentController.Add(selectedDepartment);
+            var university = _universityController.Add(selectedUniversity);
+            var department = _departmentController.Add(university.Id ,selectedDepartment);
+            Console.WriteLine(UserSession.currentUser.Id);
+            Guid id = UserSession.currentUser.Id;
+            var group = _groupController.Add(department.Id, UserSession.currentUser.Id, selectedGroup);
 
-            //UserSession.CurrentUniversity = university;
+            
+
+
+            UserSession.currentUniversity = university;
+            UserSession.currentDepartment = department;
+            UserSession.currentGroup = group;
+           
 
             MessageBox.Show($"Ви обрали: Університет - {selectedUniversity}, Факультет - {selectedDepartment}, Група - {selectedGroup}",
                 "Успішний вибір", MessageBoxButtons.OK, MessageBoxIcon.Information);

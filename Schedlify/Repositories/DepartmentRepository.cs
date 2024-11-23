@@ -58,7 +58,7 @@ public class DepartmentRepository
         return _context.Departments
             .Include(d => d.Groups)
             .Include(d => d.TemplateSlots)
-            .FirstOrDefault(d => d.UniversityId == universityId & d.Name==name));
+            .FirstOrDefault(d => d.UniversityId == universityId & d.Name == name); 
     }
 
 

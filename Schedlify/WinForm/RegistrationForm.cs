@@ -35,7 +35,7 @@ namespace Schedlify.WinForm
             if (newUser != null)
             {
                 // Реєстрація успішна
-                UserSession.CurrentUser = newUser;
+                UserSession.currentUser = newUser;
                 MessageBox.Show("Реєстрація успішна! Ваш акаунт створено.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //this.Close(); // Закриваємо форму після успішної реєстрації
                 // Закриваємо поточне вікно

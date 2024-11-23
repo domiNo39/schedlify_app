@@ -9,6 +9,7 @@ using Schedlify.Tests;
 
 namespace Schedlify;
 using DotNetEnv;
+using Schedlify.Global;
 using System.Runtime.InteropServices;
 
 public class Program
@@ -25,6 +26,8 @@ public class Program
     public static void Main(string[] args)
     {
       LoadEnv();
+   
+    
       if (args.Length > 0 && args[0] == "-t")
       {
           Tests.RepoTests.Run();
