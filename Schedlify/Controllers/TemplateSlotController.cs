@@ -24,14 +24,12 @@ namespace Schedlify.Controllers
             return templateSlots;
         }
 
-        public IEnumerable<TemplateSlot> AddTemplateSlots(Guid departmentId, IEnumerable<Slot> slotList)
+        public void AddTemplateSlots(Guid departmentId, IEnumerable<Slot> slotList)
         {
-            List<TemplateSlot> templateSlots = new List<TemplateSlot>();
-            foreach (var slot in slotList)
+            foreach (Slot slot in slotList)
             {
-                templateSlots.Append(templateSlotRepository.Add(departmentId, slot.startTime, slot.endTime, slot.classNumber));
+                templateSlotRepository.Add(departmentId, slot.startTime, slot.endTime, slot.classNumber);
             }
-            return templateSlots;
         }
 
 

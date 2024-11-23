@@ -22,9 +22,9 @@ namespace Schedlify.Controllers
             var groups = groupRepository.GetByNamePartAndDepartmentId(namePart, departmentId);
             return groups;
         }
-        public Group? Add(Guid departmentId, Guid administratorId, string namePart)
+        public Group? Add(Guid departmentId, Guid administratorId, string name)
         {
-            var newGroup = groupRepository.Add(departmentId, administratorId, namePart);
+            var newGroup = groupRepository.Add(departmentId, administratorId, name);
             return newGroup;
         }
         public Group? GetByAdministratorId(Guid administratorId)

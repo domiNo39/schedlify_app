@@ -28,7 +28,7 @@ namespace Schedlify.Controllers
             var existingUniversity = universityRepository.GetByName(name);
             if (existingUniversity != null)
             {
-                return null;
+                return existingUniversity;
             }
 
             var newUniversity = universityRepository.Add(name);

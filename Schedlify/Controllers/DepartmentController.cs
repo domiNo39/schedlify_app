@@ -22,9 +22,15 @@ namespace Schedlify.Controllers
             var departments = departmentRepository.GetByNamePartAndUniversityId(universityId, namePart);
             return departments;
         }
-        public Department? Add(Guid universityId, string namePart)
+        public Department? Add(Guid universityId, string name)
+
         {
-            var newDepartment = departmentRepository.Add(universityId, namePart);
+            var existingDepartment = departmentRepository.GetByNameAndUniversityId(universityId, name);
+            if (existingDepartment != null)
+            {
+                return existingDepartment;
+            }
+            var newDepartment = departmentRepository.Add(universityId, name);
             return newDepartment;
         }
     }

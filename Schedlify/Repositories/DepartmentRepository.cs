@@ -50,9 +50,15 @@ public class DepartmentRepository
         return _context.Departments
             .Include(d => d.Groups)
             .Include(d => d.TemplateSlots)
-            .Where(d => d.UniversityId == universityId)
-            .Where(d => d.Name.ToLower().Contains(name.ToLower()))
+            .Where(d => d.UniversityId == universityId & d.Name.ToLower().Contains(name.ToLower()))
             .ToList();
+    }
+    public Department? GetByNameAndUniversityId(Guid universityId, string name)
+    {
+        return _context.Departments
+            .Include(d => d.Groups)
+            .Include(d => d.TemplateSlots)
+            .FirstOrDefault(d => d.UniversityId == universityId & d.Name==name));
     }
 
 
