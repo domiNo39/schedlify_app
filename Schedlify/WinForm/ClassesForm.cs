@@ -122,5 +122,10 @@ namespace Schedlify.WinForm
             scheduleForm.Show();
             this.Close();
         }
+
+        private void ClassesForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

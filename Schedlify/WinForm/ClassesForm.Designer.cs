@@ -105,7 +105,8 @@
             Controls.Add(itemTextBox);
             Controls.Add(Предмети);
             Name = "ClassesForm";
-            Text = "Schedulify";
+            Text = "Schedlify";
+            Load += ClassesForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
