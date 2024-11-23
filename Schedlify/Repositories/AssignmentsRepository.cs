@@ -17,6 +17,7 @@ public class AssignmentsRepository
     public IEnumerable<Assignment> GetAssignmentsByWeekday(Guid groupId, Weekday weekday, AssignmentType assignmentType)
     {
         return _context.Assignments
+            .Include(d => d.Class)
             .Where(a => a.GroupId == groupId && a.Weekday == weekday)
             .Where(a => a.Type == assignmentType)
             .OrderBy(a => a.StartTime)
@@ -26,6 +27,7 @@ public class AssignmentsRepository
     public IEnumerable<Assignment> GetAssignmentsByDate(Guid groupId, DateOnly date)
     {
         return _context.Assignments
+            .Include(d => d.Class)
             .Where(a => a.GroupId == groupId && a.Date == date)
             .OrderBy(a => a.StartTime)
             .ToList();
