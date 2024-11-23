@@ -133,7 +133,7 @@ namespace Schedlify.WinForm
                 "Успішний вибір", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Переходимо на ScheduleForm
-            var scheduleForm = new ScheduleForm();
+            ScheduleForm scheduleForm = new ScheduleForm();
             scheduleForm.Show();
 
             // Закриваємо поточну форму

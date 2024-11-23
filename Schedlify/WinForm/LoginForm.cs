@@ -8,11 +8,13 @@ namespace Schedlify.WinForm
     public partial class LoginForm : Form
     {
         private UsersController _usersController;
+        private GroupController _groupController;
 
         public LoginForm()
         {
             InitializeComponent();
-            _usersController = new UsersController();  // Ініціалізація контролера для користувачів
+            _usersController = new UsersController();
+            _groupController = new GroupController(); 
         }
 
         // Обробник події для кнопки "Увійти"
@@ -37,9 +39,19 @@ namespace Schedlify.WinForm
                 UserSession.currentUser = user;
                 MessageBox.Show("Успішний вхід! Ласкаво просимо.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+
+                var group = _groupController.GetByAdministratorId(user.Id);
+                if (group != null)
+                {
+                    ScheduleForm scheduleForm = new ScheduleForm();
+                    scheduleForm.Show();
+                }
+                else
+                {
+                    UniDepGroupForm uniDepGroupForm = new UniDepGroupForm();
+                    uniDepGroupForm.Show();
+                }
                 // Переходимо до UniDepGroupForm
-                UniDepGroupForm uniDepGroupForm = new UniDepGroupForm();
-                uniDepGroupForm.Show();
                 this.Close(); // Закриваємо форму після успішного входу
             }
             else
