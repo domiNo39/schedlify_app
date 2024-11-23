@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Microsoft.IdentityModel.Tokens;
 using Schedlify.Controllers;
 using Schedlify.Global;
 
@@ -9,12 +10,14 @@ namespace Schedlify.WinForm
     {
         private UsersController _usersController;
         private GroupController _groupController;
+        private TemplateSlotController _templateSlotController;
 
         public LoginForm()
         {
             InitializeComponent();
             _usersController = new UsersController();
             _groupController = new GroupController(); 
+            _templateSlotController = new TemplateSlotController();
         }
 
         // Обробник події для кнопки "Увійти"
@@ -41,10 +44,23 @@ namespace Schedlify.WinForm
 
 
                 var group = _groupController.GetByAdministratorId(user.Id);
+                
                 if (group != null)
                 {
-                    ScheduleForm scheduleForm = new ScheduleForm();
-                    scheduleForm.Show();
+                    UserSession.currentGroup = group;
+                    UserSession.currentDepartment = group.Department;
+                    var timeSlots = _templateSlotController.GetByDepartmentId(group.Id);
+                    if (!timeSlots.IsNullOrEmpty())
+                    {
+                        ScheduleForm scheduleForm = new ScheduleForm();
+                        scheduleForm.Show();
+                    }
+                    else
+                    {
+                        TimeSlotsForm timeSlotsForm = new TimeSlotsForm();
+                        timeSlotsForm.Show();
+                    }
+                    
                 }
                 else
                 {

@@ -117,17 +117,11 @@ namespace Schedlify.WinForm
 
             var university = _universityController.Add(selectedUniversity);
             var department = _departmentController.Add(university.Id ,selectedDepartment);
-            Console.WriteLine(UserSession.currentUser.Id);
-            Guid id = UserSession.currentUser.Id;
             var group = _groupController.Add(department.Id, UserSession.currentUser.Id, selectedGroup);
-
-            
-
 
             UserSession.currentUniversity = university;
             UserSession.currentDepartment = department;
             UserSession.currentGroup = group;
-           
 
             MessageBox.Show($"Ви обрали: Університет - {selectedUniversity}, Факультет - {selectedDepartment}, Група - {selectedGroup}",
                 "Успішний вибір", MessageBoxButtons.OK, MessageBoxIcon.Information);
