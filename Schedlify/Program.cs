@@ -25,13 +25,19 @@ public class Program
     public static void Main(string[] args)
     {
       LoadEnv();
+      if (args.Length > 0 && args[0] == "-t")
+      {
+          Tests.RepoTests.Run();
+      }
+      else
+      {
+          Application.EnableVisualStyles();
+          Application.SetCompatibleTextRenderingDefault(false);
 
-      Application.EnableVisualStyles();
-      Application.SetCompatibleTextRenderingDefault(false);
-
-      // Створення та запуск основної форми Windows Forms
-      var mainForm = new MainForm();
-      Application.Run(mainForm);
-      RepoTests.Run();
+          // Створення та запуск основної форми Windows Forms
+          var mainForm = new MainForm();
+          Application.Run(mainForm);
+          RepoTests.Run();
+      }
     }
 }

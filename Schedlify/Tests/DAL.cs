@@ -73,11 +73,73 @@ public class RepoTests
         transaction.Rollback(); // Roll back changes after test
     }
 
+    public static void TestClassRepo()
+    {
+        _context = ApplicationDbContextFactory.CreateDbContext();
+        using var transaction = _context.Database.BeginTransaction();
+
+        
+        UniversityRepository universityRepository = new UniversityRepository(_context);
+        DepartmentRepository departmentRepository = new DepartmentRepository(_context);
+        UserRepository userRepository = new UserRepository(_context);
+        GroupRepository groupRepository = new GroupRepository(_context);
+        ClassRepository classRepository = new ClassRepository(_context);
+        University u = universityRepository.Add("Lviv National University");
+        Department d = departmentRepository.Add(u.Id, "Applied Math Faculty");
+        User usr = userRepository.Add("groupadmin@university.com", "securehash");
+        Group g = groupRepository.Add(d.Id, usr.Id, "PMI-35");
+        Class c = classRepository.Add(g.Id, "Web Development");
+
+        IEnumerable<Class> cs = classRepository.GetByGroupId(g.Id);
+        Console.WriteLine(cs.Any());
+        
+        transaction.Rollback(); // Roll back changes after test
+    }
+
+    public static void TestAssRepo()
+    {
+        
+        _context = ApplicationDbContextFactory.CreateDbContext();
+        using var transaction = _context.Database.BeginTransaction();
+        
+        UniversityRepository universityRepository = new UniversityRepository(_context);
+        DepartmentRepository departmentRepository = new DepartmentRepository(_context);
+        UserRepository userRepository = new UserRepository(_context);
+        GroupRepository groupRepository = new GroupRepository(_context);
+        ClassRepository classRepository = new ClassRepository(_context);
+        AssignmentsRepository assignmentsRepository = new AssignmentsRepository(_context);
+        University u = universityRepository.Add("Lviv National University");
+        Department d = departmentRepository.Add(u.Id, "Applied Math Faculty");
+        User usr = userRepository.Add("groupadmin@university.com", "securehash");
+        Group g = groupRepository.Add(d.Id, usr.Id, "PMI-35");
+        Class c = classRepository.Add(g.Id, "Web Development");
+        
+        Assignment a = assignmentsRepository.AddAssignment(
+            g.Id,
+            c.Id,
+            Weekday.Monday,
+            new TimeOnly(15, 5),
+            AssignmentType.Regular,
+            "Tarasuk",
+            "Universitetska, 1",
+            "111",
+            DateOnly.Parse("2021-01-01"),
+            null
+        );
+        IEnumerable<Assignment> ass = assignmentsRepository.GetAssignmentsByWeekday(
+            g.Id, Weekday.Monday, AssignmentType.Regular);
+        Console.WriteLine(ass.Any());
+        transaction.Commit();
+        _context.SaveChanges();
+    }
+
     public static void Run()
     {
         TestUserRepo();
         TestUniRepo();
         TestDepartmentRepo();
         TestGroupRepo();
+        TestClassRepo();
+        TestAssRepo();
     }
 }
