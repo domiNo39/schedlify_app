@@ -81,4 +81,42 @@ public class AssignmentsRepository
 
         return assignment;
     }
+    
+    public void EditAssignment(Guid assignmentId, Guid groupId, Guid classId, Weekday weekday, TimeOnly startTime, AssignmentType assignmentType, 
+                               string? lecturer = null, string? address = null, string? roomNumber = null, DateOnly? date = null, TimeOnly? endTime = null)
+    {
+        var assignment = _context.Assignments.FirstOrDefault(a => a.Id == assignmentId);
+        
+        if (assignment == null)
+        {
+            throw new InvalidOperationException("Assignment not found.");
+        }
+
+        assignment.GroupId = groupId;
+        assignment.ClassId = classId;
+        assignment.Weekday = weekday;
+        assignment.StartTime = startTime;
+        assignment.Type = assignmentType;
+        assignment.Lecturer = lecturer;
+        assignment.Address = address;
+        assignment.RoomNumber = roomNumber;
+        assignment.Date = date;
+        assignment.EndTime = endTime;
+
+        _context.SaveChanges();
+    }
+
+    public void DeleteAssignment(Guid assignmentId)
+    {
+        var assignment = _context.Assignments.FirstOrDefault(a => a.Id == assignmentId);
+        
+        if (assignment == null)
+        {
+            throw new InvalidOperationException("Assignment not found.");
+        }
+
+        _context.Assignments.Remove(assignment);
+
+        _context.SaveChanges();
+    }
 }
