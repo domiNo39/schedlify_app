@@ -12,10 +12,10 @@ public class TemplateSlot
     public Guid DepartmentId { get; set; }
 
     [Required]
-    public TimeSpan StartTime { get; set; }
+    public TimeOnly StartTime { get; set; }
 
     [Required]
-    public TimeSpan EndTime { get; set; }
+    public TimeOnly EndTime { get; set; }
 
     [Required]
     public int ClassNumber { get; set; }
