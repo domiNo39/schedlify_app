@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Schedlify.Data;
 using Schedlify.Repositories;
 using Schedlify.Models;
+using Schedlify.Utils;
 
 namespace Schedlify.Controllers
 {
@@ -19,14 +20,18 @@ namespace Schedlify.Controllers
         }
         public IEnumerable<TemplateSlot> GetByDepartmentId(Guid departmentId)
         {
-            var templateSlots = templateSlotRepository.GetByDepartmentId(departmentId)
+            var templateSlots = templateSlotRepository.GetByDepartmentId(departmentId);
             return templateSlots;
         }
 
-        public TemplateSlot? GetByDepartmentId(Guid departmentId)
+        public IEnumerable<TemplateSlot> AddTemplateSlots(Guid departmentId, IEnumerable<Slot> slotList)
         {
-            var newUniversity = templateSlotRepository.GetByDepartmentId(departmentId);
-            return newUniversity; 
+            List<TemplateSlot> templateSlots = new List<TemplateSlot>();
+            foreach (var slot in slotList)
+            {
+                templateSlots.Append(templateSlotRepository.Add(departmentId, slot.startTime, slot.endTime, slot.classNumber));
+            }
+            return templateSlots;
         }
 
 
