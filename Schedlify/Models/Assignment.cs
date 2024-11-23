@@ -25,15 +25,15 @@ public class Assignment
     public string? RoomNumber { get; set; }
 
     [Required]
-    public TimeSpan StartTime { get; set; }
-    public TimeSpan? EndTime { get; set; }
+    public TimeOnly StartTime { get; set; }
+    public TimeOnly? EndTime { get; set; }
 
     [Required]
     [Column("Type")]
     public AssignmentType Type { get; set; }
         
     [Column("Date")]
-    public DateTime? Date { get; set; }
+    public DateOnly? Date { get; set; }
 
     // Navigation properties
     [ForeignKey("GroupId")]
