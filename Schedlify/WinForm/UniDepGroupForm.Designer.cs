@@ -82,7 +82,7 @@ namespace Schedlify.WinForm
             this.continueButton.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.continueButton.Location = new System.Drawing.Point(250, 300);
             this.continueButton.Text = "Продовжити";
-            this.continueButton.Click += new System.EventHandler(this.continueButton_Click);
+            this.continueButton.Click += new System.EventHandler(this.confirmSelectionButton_Click);
 
             // 
             // UniDepGroupForm

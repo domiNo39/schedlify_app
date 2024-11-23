@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Windows.Forms;
 using Schedlify.Controllers;
+using Schedlify.Global;
+using Schedlify.Models;
 
 namespace Schedlify.WinForm
 {
@@ -77,20 +79,35 @@ namespace Schedlify.WinForm
         }
 
 
-        private void continueButton_Click(object sender, EventArgs e)
+        private void confirmSelectionButton_Click(object sender, EventArgs e)
         {
-            string university = universityComboBox.Text;
-            string department = departmentComboBox.Text;
-            string group = groupComboBox.Text;
-
-            if (string.IsNullOrEmpty(university) || string.IsNullOrEmpty(department) || string.IsNullOrEmpty(group))
+            // Перевірка, чи вибрані всі необхідні значення
+            if (string.IsNullOrEmpty(universityComboBox.Text) ||
+                string.IsNullOrEmpty(departmentComboBox.Text) ||
+                string.IsNullOrEmpty(groupComboBox.Text))
             {
-                MessageBox.Show("Будь ласка, заповніть усі поля.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Будь ласка, виберіть університет, факультет і групу.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Тут можна зберегти вибір або передати дані далі
-            MessageBox.Show($"Університет: {university}\nФакультет: {department}\nГрупа: {group}", "Успішно");
+            // Логіка обробки вибраного університету, факультету та групи
+            string selectedUniversity = universityComboBox.Text;
+            string selectedDepartment = departmentComboBox.Text;
+            string selectedGroup = groupComboBox.Text;
+
+            //var university = _universityController.Add(selectedUniversity);
+            //var department = _departmentController.Add(selectedDepartment);
+
+            //UserSession.CurrentUniversity = university;
+
+            MessageBox.Show($"Ви обрали: Університет - {selectedUniversity}, Факультет - {selectedDepartment}, Група - {selectedGroup}",
+                "Успішний вибір", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // Переходимо на ScheduleForm
+            var scheduleForm = new ScheduleForm();
+            scheduleForm.Show();
+
+            // Закриваємо поточну форму
             this.Close();
         }
     }
