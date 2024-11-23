@@ -31,7 +31,7 @@ public class TemplateSlotRepository
 
 
     // Add a new TemplateSlot
-    public TemplateSlot Add(Guid departmentId, TimeSpan startTime, TimeSpan endTime, int classNumber)
+    public TemplateSlot Add(Guid departmentId, TimeOnly startTime, TimeOnly endTime, int classNumber)
     {
         var templateSlot = new TemplateSlot
         {
