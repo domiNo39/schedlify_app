@@ -24,7 +24,7 @@ namespace Schedlify.Controllers
             int weekOfYear = (date.DayOfYear - 1) / 7 + 1;
             return weekOfYear % 2 == 0;
         }
-        public IEnumerable<Assignment> GetByGroupIdAndDate(Guid groupId, DateOnly date)
+        public List<Assignment> GetByGroupIdAndDate(Guid groupId, DateOnly date)
         {
             int dayOfWeek = (int)date.DayOfWeek; 
             List<Assignment> regularAssignments = assigmentRepository.GetAssignmentsByWeekday(groupId, (Weekday)((dayOfWeek + 6) % 7), AssignmentType.Regular).ToList();

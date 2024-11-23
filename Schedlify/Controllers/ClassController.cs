@@ -18,10 +18,10 @@ namespace Schedlify.Controllers
             ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
             classRepository = new ClassRepository(_context);
         }
-        public IEnumerable<Class> GetByGroupId(Guid groupId)
+        public List<Class> GetByGroupId(Guid groupId)
         {
             var templateSlots = classRepository.GetByGroupId(groupId);
-            return templateSlots;
+            return templateSlots.ToList();
         }
 
         public Class? Add(Guid groupId, string name)

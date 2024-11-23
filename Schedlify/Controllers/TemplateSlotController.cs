@@ -18,10 +18,10 @@ namespace Schedlify.Controllers
             ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
             templateSlotRepository = new TemplateSlotRepository(_context);
         }
-        public IEnumerable<TemplateSlot> GetByDepartmentId(Guid departmentId)
+        public List<TemplateSlot> GetByDepartmentId(Guid departmentId)
         {
             var templateSlots = templateSlotRepository.GetByDepartmentId(departmentId);
-            return templateSlots;
+            return templateSlots.ToList();
         }
 
         public void AddTemplateSlots(Guid departmentId, IEnumerable<Slot> slotList)

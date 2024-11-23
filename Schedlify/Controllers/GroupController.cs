@@ -17,10 +17,10 @@ namespace Schedlify.Controllers
             ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
             groupRepository = new GroupRepository(_context);
         }
-        public IEnumerable<Group> Search(Guid departmentId,string namePart)
+        public List<Group> Search(Guid departmentId,string namePart)
         {
             var groups = groupRepository.GetByNamePartAndDepartmentId(namePart, departmentId);
-            return groups;
+            return groups.ToList();
         }
         public Group? Add(Guid departmentId, Guid administratorId, string name)
         {

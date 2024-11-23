@@ -17,10 +17,10 @@ namespace Schedlify.Controllers
             ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
             universityRepository = new UniversityRepository(_context);
         }
-        public IEnumerable<University> Search(string namePart)
+        public List<University> Search(string namePart)
         {
             var universities = universityRepository.GetByNamePart(namePart);
-            return universities;
+            return universities.ToList();
         }
 
         public University? Add(string name)
