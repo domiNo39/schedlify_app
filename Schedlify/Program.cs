@@ -5,6 +5,7 @@ using System;
 using System.Windows.Forms;
 using Schedlify.WinForm;
 using Schedlify.Tests;
+using Schedlify.Scripts;
 
 
 namespace Schedlify;
@@ -31,6 +32,10 @@ public class Program
       if (args.Length > 0 && args[0] == "-t")
       {
           Tests.RepoTests.Run();
+      }
+      if (args.Length > 0 && args[0] == "-s")
+      {
+          Scripts.FillDb.Run();
       }
       else
       {
