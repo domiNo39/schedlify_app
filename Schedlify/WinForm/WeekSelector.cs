@@ -31,14 +31,14 @@ namespace Schedlify.WinForm
 
         private void button_prev_week_Click(object sender, EventArgs e)
         {
-            this.CurrWeekStart = CurrWeekStart.AddDays(7);
+            this.CurrWeekStart = CurrWeekStart.AddDays(-7);
             InitializeTime();
 
 
         }
         private void button_next_week_Click(object sender, EventArgs e)
         {
-            this.CurrWeekStart = CurrWeekStart.AddDays(-7);
+            this.CurrWeekStart = CurrWeekStart.AddDays(7);
             InitializeTime();
 
         }
