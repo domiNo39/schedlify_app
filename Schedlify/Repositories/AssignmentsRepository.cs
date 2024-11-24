@@ -19,7 +19,7 @@ public class AssignmentsRepository
         return _context.Assignments
             .Include(d => d.Class)
             .Where(a => a.GroupId == groupId && a.Weekday == weekday)
-            .Where(a => a.Type == assignmentType)
+            .Where(a => a.Type == assignmentType && a.Date == null)
             .OrderBy(a => a.StartTime)
             .ToList();
     }
