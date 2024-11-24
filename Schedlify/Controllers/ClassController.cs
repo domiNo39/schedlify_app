@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Schedlify.Data;
+﻿using Schedlify.Data;
 using Schedlify.Repositories;
 using Schedlify.Models;
-using Schedlify.Utils;
+
 
 namespace Schedlify.Controllers
 {
@@ -27,7 +22,7 @@ namespace Schedlify.Controllers
         public Class? Add(Guid groupId, string name)
         {
 
-            var newClass=classRepository.Add(groupId,name);
+            var newClass = classRepository.Add(groupId, name);
             return newClass;
         }
         public Class? Edit(Guid classId, string name)
