@@ -20,7 +20,7 @@ namespace Schedlify.WinForm
            
             
             InitializeComponent();
-            InitializeTable(_templateSlots.Count, _assignmentController);
+            InitializeTable(_templateSlots, _assignmentController, weekSelector1.CurrWeekStart);
             // Встановлюємо текст "Розклад"
             scheduleLabel.Text = "Розклад";
         }
@@ -53,6 +53,19 @@ namespace Schedlify.WinForm
         private void flowLayoutPanel3_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnCreateAssignment_Click(object sender, EventArgs e)
+        {
+            // Відкрити форму CreateAssignmentForm
+            var createAssignmentForm = new CreateAssignment();
+            createAssignmentForm.ShowDialog(); // Використовуємо ShowDialog для модального відкриття
+        }
+
+        private void changeSchedule_ValueChanged(object sender, EventArgs e)
+        {
+            panel1.Controls.Clear();
+            InitializeTable(_templateSlots, _assignmentController, weekSelector1.CurrWeekStart);
         }
     }
 }

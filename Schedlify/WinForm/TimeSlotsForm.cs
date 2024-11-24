@@ -12,7 +12,7 @@ namespace Schedlify.WinForm
     public partial class TimeSlotsForm : Form
     {
         private List<Slot> _slotList; // Локальний список для редагування
-        public IEnumerable<Slot> SlotListAsEnumerable => _slotList.AsEnumerable(); // Публічний доступ до списку як IEnumerable
+         // Публічний доступ до списку як IEnumerable
 
         private readonly TemplateSlotController _templateSlotController;
 
@@ -87,7 +87,7 @@ namespace Schedlify.WinForm
                 }
 
                 // Якщо всі слоти коректні, додаємо їх через контролер
-                _templateSlotController.AddTemplateSlots(UserSession.currentDepartment.Id, SlotListAsEnumerable);
+                _templateSlotController.AddTemplateSlots(UserSession.currentDepartment.Id, _slotList);
 
                 // Перехід до наступної форми
                 ClassesForm classesForm = new ClassesForm();
@@ -139,7 +139,7 @@ namespace Schedlify.WinForm
         private void UpdateSlotListDisplay()
         {
             SlotList.Items.Clear();
-            foreach (var slot in SlotListAsEnumerable)
+            foreach (var slot in _slotList)
             {
                 SlotList.Items.Add($"{slot.startTime:HH\\:mm} - {slot.endTime:HH\\:mm}");
             }

@@ -1,6 +1,8 @@
 ﻿using Schedlify.Controllers;
 using System.Windows.Forms;
 using Schedlify.Global;
+using Schedlify.Models;
+using Schedlify.Utils;
 
 namespace Schedlify.WinForm
 {
@@ -30,9 +32,10 @@ namespace Schedlify.WinForm
         /// Метод для ініціалізації компонентів
         /// </summary>
         /// 
-        private void InitializeTable(int rowsNum, AssignmentController assignmentController) 
+        private void InitializeTable(List<TemplateSlot> slots, AssignmentController assignmentController, DateOnly date) 
         {
-            
+            int rowsNum = slots.Count;
+
             TableLayoutPanel tableLayoutPanel1 = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill, // Make it fill the form
@@ -50,23 +53,37 @@ namespace Schedlify.WinForm
             {
                 tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 6/rowsNum)); // Evenly distributed
             }
-            DateOnly date = DateOnly.FromDateTime(new DateTime(2024, 11, 24));
+            
             for (int col = 0; col < tableLayoutPanel1.ColumnCount; col++) 
             {
 
                 List<Models.Assignment> assignmentsList = assignmentController.GetByGroupIdAndDate(UserSession.currentGroup.Id, date.AddDays(col));
                 for (int row = 0; row < tableLayoutPanel1.RowCount; row++)
                 {
-                    if (assignmentsList.Count >= row + 1)
+                    //if (assignmentsList.Count >= row + 1)
+                    //{
+                    //    Assignment assignment = new Assignment(assignmentsList[row]);
+                    //    TemplateSlot filterSlot = slots.FirstOrDefault(s => s.StartTime == assignmentsList[row].StartTime);
+                    //    if (filterSlot != null) { 
+                    //        tableLayoutPanel1.Controls.Add(assignment, col, filterSlot.ClassNumber); // Додаємо текст у комірку
+                    //    }
+                        
+                    //}
+                    if (assignmentsList.FirstOrDefault(p => p.StartTime == slots[row].StartTime) != null)
                     {
-                        Assignment assignment = new Assignment(assignmentsList[row]);
-                        tableLayoutPanel1.Controls.Add(assignment, col, row); // Додаємо текст у комірку
+                        Assignment assignment = new Assignment(assignmentsList.FirstOrDefault(p => p.StartTime == slots[row].StartTime));
+                        tableLayoutPanel1.Controls.Add(assignment, col, row);
                     }
-  
+                    else
+                    {
+                        tableLayoutPanel1.Controls.Add(new AddAssignment(date.AddDays(col), row));
+                    }
+                    
+
                     //tableLayoutPanel1.Controls.Add(label, col, row); // Додаємо текст у комірку
                 }
             }
-            this.Controls.Add(tableLayoutPanel1);
+            panel1.Controls.Add(tableLayoutPanel1);
         }
         private void InitializeComponent()
         {
@@ -79,6 +96,8 @@ namespace Schedlify.WinForm
             label6 = new Label();
             label_group_static = new Label();
             label_group = new Label();
+            panel1 = new Panel();
+            weekSelector1 = new WeekSelector();
             SuspendLayout();
             // 
             // scheduleLabel
@@ -183,13 +202,32 @@ namespace Schedlify.WinForm
             label_group.TabIndex = 12;
             label_group.Text = "Group";
             // 
+            // panel1
+            // 
+            panel1.Location = new Point(22, 182);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1548, 1160);
+            panel1.TabIndex = 14;
+            // 
+            // weekSelector1
+            // 
+            weekSelector1.Location = new Point(1106, 30);
+            weekSelector1.Margin = new Padding(6, 6, 6, 6);
+            weekSelector1.Name = "weekSelector1";
+            weekSelector1.Size = new Size(274, 54);
+            weekSelector1.TabIndex = 15;
+            weekSelector1.dateTimePicker1.ValueChanged += changeSchedule_ValueChanged;
+            // 
             // ScheduleForm
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             BackColor = SystemColors.Window;
             BackgroundImageLayout = ImageLayout.None;
-            ClientSize = new Size(1405, 1372);
+            ClientSize = new Size(1600, 1360);
+            Controls.Add(weekSelector1);
+            Controls.Add(panel1);
             Controls.Add(label_group);
             Controls.Add(label_group_static);
             Controls.Add(label6);
@@ -222,5 +260,7 @@ namespace Schedlify.WinForm
         private Label label6;
         private Label label_group_static;
         private Label label_group;
+        private Panel panel1;
+        private WeekSelector weekSelector1;
     }
 }
