@@ -104,7 +104,7 @@
             Controls.Add(className);
             Controls.Add(startTime);
             Name = "Assignment";
-            Size = new Size(384, 273);
+            Size = new Size(256, 190);
             ResumeLayout(false);
             PerformLayout();
         }
