@@ -13,6 +13,7 @@ namespace Schedlify.WinForm
     public partial class WeekSelector : UserControl
     {
         public DateOnly CurrWeekStart;
+        public EventHandler? ValueChanged;
         public WeekSelector()
         {
             DateOnly nowDate = DateOnly.FromDateTime(DateTime.Now);
@@ -45,8 +46,10 @@ namespace Schedlify.WinForm
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             DateOnly curr_selected_date = DateOnly.FromDateTime(dateTimePicker1.Value);
-            this.CurrWeekStart = curr_selected_date.AddDays((((int)curr_selected_date.DayOfWeek + 6) % 7) * -1);
-            InitializeTime();
+            if (this.CurrWeekStart != curr_selected_date.AddDays((((int)curr_selected_date.DayOfWeek + 6) % 7) * -1)){
+                this.CurrWeekStart = curr_selected_date.AddDays((((int)curr_selected_date.DayOfWeek + 6) % 7) * -1);
+                InitializeTime();
+            }
 
         }
     }
