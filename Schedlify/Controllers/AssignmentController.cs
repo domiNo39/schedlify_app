@@ -6,18 +6,21 @@ using System.Threading.Tasks;
 using Schedlify.Data;
 using Schedlify.Repositories;
 using Schedlify.Models;
+using Schedlify.Global;
 using Schedlify.Utils;
 using Schedlify.Migrations;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Schedlify.Controllers
 {
     public class AssignmentController
     {
         private readonly AssignmentsRepository assigmentRepository;
+        private readonly TemplateSlotRepository templateSlotRepository;
         public AssignmentController()
         {
             ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
-            assigmentRepository = new AssignmentsRepository(_context);
+            this.assigmentRepository = new AssignmentsRepository(_context);
         }
         public bool IsEvenWeek(DateOnly date)
         {
@@ -43,7 +46,33 @@ namespace Schedlify.Controllers
 
 
         }
-        //public Assignment? Add()
+        public Assignment? AddRegularAssignment(
+            Weekday weekDay,
+            int classNumber,
+            Guid classId,
+            string? lecturer = null,
+            string? address = null,
+            string? roomNumber = null,
+            ClassType? classType = null,
+            Mode? mode = null)
+        {
+            TemplateSlot slot = this.templateSlotRepository.GetByDepartmentIdAndClassNumber(UserSession.currentDepartment.Id, classNumber);
+            Assignment? newRegularAssignment = assigmentRepository.AddAssignment(
+                UserSession.currentGroup.Id,
+                classId,
+                weekDay,
+                slot.StartTime,
+                AssignmentType.Regular,
+                lecturer,
+                address,
+                roomNumber,
+                classType,
+                mode,
+                null,
+                slot.EndTime);
+            return newRegularAssignment;
+        }
+        
 
 
 
