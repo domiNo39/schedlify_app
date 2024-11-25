@@ -13,12 +13,13 @@ using Schedlify.Models;
 
 namespace Schedlify.WinForm
 {
-    public partial class CreateRegularAssignment : Form
+    public partial class CreateIntervalAssignment : Form
     {
         ClassController _classescontroller;
         AssignmentController _assignmentcontroller;
         int classNumber;
         Weekday weekDay;
+        AssignmentType assignmentType;
         List<Class> classes;
         Dictionary<int, string> daysOfWeek = new Dictionary<int, string>
         {
@@ -29,7 +30,7 @@ namespace Schedlify.WinForm
             { 4, "П'ятниця" },
             { 5, "Субота" },
         };
-        public CreateRegularAssignment(int _classNumber, Weekday _weekDay)
+        public CreateIntervalAssignment(int _classNumber, Weekday _weekDay,AssignmentType _assignmentType)
         {
             
             InitializeComponent();
@@ -45,6 +46,7 @@ namespace Schedlify.WinForm
             _classescontroller = new ClassController();
             _assignmentcontroller = new AssignmentController();
             weekDay = _weekDay;
+            assignmentType = _assignmentType;
 
 
             // Заповнення випадаючих списків (приклад)
@@ -110,7 +112,7 @@ namespace Schedlify.WinForm
                 string? address = txtAddress.Text == "" ? null: txtAddress.Text;
                 string? roomNumber = txtRoomNumber.Text == "" ? null: txtRoomNumber.Text;
 
-                _assignmentcontroller.AddRegularAssignment(weekDay, classNumber, _class.Id, lecturer, address, roomNumber, (ClassType)classType, (Mode)mode);
+                _assignmentcontroller.AddIntervalAssignment(weekDay, classNumber, _class.Id,assignmentType, lecturer, address, roomNumber, (ClassType)classType, (Mode)mode);
 
                 var mainForm = Application.OpenForms.OfType<ScheduleForm>().FirstOrDefault();
                 mainForm.changeSchedule_ValueChanged(sender, EventArgs.Empty);

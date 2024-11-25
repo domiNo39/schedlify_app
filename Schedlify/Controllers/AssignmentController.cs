@@ -25,6 +25,7 @@ namespace Schedlify.Controllers
         }
         public static bool IsEvenWeek(DateOnly date)
         {
+
             int weekOfYear = (date.DayOfYear - 1) / 7 + 1;
             return weekOfYear % 2 == 0;
         }

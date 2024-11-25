@@ -38,7 +38,7 @@
         <AutoGen>True</AutoGen>
         <DependentUpon>Resources.resx</DependentUpon>
       </Compile>
-      <Compile Update="WinForm\CreateSpecialAssignment.cs">
+      <Compile Update="WinForm\CreateIntervalAssignment.cs">
         <SubType>Form</SubType>
       </Compile>
     </ItemGroup>

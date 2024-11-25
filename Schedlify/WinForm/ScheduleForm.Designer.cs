@@ -142,7 +142,7 @@ namespace Schedlify.WinForm
             weekSelector1.Margin = new Padding(6, 6, 6, 6);
             weekSelector1.Name = "weekSelector1";
             weekSelector1.Size = new Size(274, 54);
-            weekSelector1.TabIndex = 15;
+            weekSelector1.dateTimePicker1.ValueChanged += changeSchedule_ValueChanged;
             // 
             // logoutBtn
             // 

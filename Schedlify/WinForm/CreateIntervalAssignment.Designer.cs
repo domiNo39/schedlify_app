@@ -2,7 +2,7 @@
 
 namespace Schedlify.WinForm
 {
-    partial class CreateRegularAssignment
+    partial class CreateIntervalAssignment
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -83,7 +83,7 @@ namespace Schedlify.WinForm
             classesLabel.Name = "classesLabel";
             classesLabel.Size = new Size(116, 32);
             classesLabel.TabIndex = 0;
-            classesLabel.Text = "Предмет:";         
+            classesLabel.Text = "Предмет:";        
             // 
             // lblLecturer
             // 

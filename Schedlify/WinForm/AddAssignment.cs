@@ -1,4 +1,5 @@
-﻿using Schedlify.Models;
+﻿using Schedlify.Controllers;
+using Schedlify.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -47,12 +48,35 @@ namespace Schedlify.WinForm
 
         private void НаступногоТижняToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            if (AssignmentController.IsEvenWeek(date))
+            {
+                var createAssignmentForm = new CreateIntervalAssignment(classNumber, weekDay, AssignmentType.Odd);
+                createAssignmentForm.ShowDialog();
+
+            }
+            else
+            {
+                var createAssignmentForm = new CreateIntervalAssignment(classNumber, weekDay, AssignmentType.Even);
+                createAssignmentForm.ShowDialog();
+
+            }
+
         }
 
         private void ЦьогоТижняToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            if (AssignmentController.IsEvenWeek(date))
+            {
+                var createAssignmentForm = new CreateIntervalAssignment(classNumber, weekDay, AssignmentType.Even);
+                createAssignmentForm.ShowDialog();
+
+            }
+            else
+            {
+                var createAssignmentForm = new CreateIntervalAssignment(classNumber, weekDay, AssignmentType.Odd);
+                createAssignmentForm.ShowDialog();
+
+            }
         }
 
         private void ОдноразоваToolStripMenuItem_Click(object sender, EventArgs e)
