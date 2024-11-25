@@ -4,7 +4,6 @@ using Schedlify.Data;
 using System;
 using System.Windows.Forms;
 using Schedlify.WinForm;
-using Schedlify.Tests;
 using Schedlify.Scripts;
 
 
@@ -27,12 +26,6 @@ public class Program
     public static void Main(string[] args)
     {
       LoadEnv();
-   
-    
-      if (args.Length > 0 && args[0] == "-t")
-      {
-          Tests.RepoTests.Run();
-      }
       if (args.Length > 0 && args[0] == "-s")
       {
           Scripts.FillDb.Run();
@@ -45,7 +38,6 @@ public class Program
           // Створення та запуск основної форми Windows Forms
           var mainForm = new MainForm();
           Application.Run(mainForm);
-          RepoTests.Run();
       }
     }
 }

@@ -122,11 +122,6 @@ namespace Schedlify.WinForm
             UserSession.currentUniversity = university;
             UserSession.currentDepartment = department;
             UserSession.currentGroup = group;
-
-            MessageBox.Show($"Ви обрали: Університет - {selectedUniversity}, Факультет - {selectedDepartment}, Група - {selectedGroup}",
-                "Успішний вибір", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Переходимо на ScheduleForm
             ScheduleForm scheduleForm = new ScheduleForm();
             scheduleForm.Show();
 

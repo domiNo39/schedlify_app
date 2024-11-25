@@ -1,5 +1,6 @@
 ﻿namespace Schedlify.WinForm
 {
+    using Schedlify.Global;
     partial class Assignment
     {
         /// <summary> 
@@ -114,7 +115,7 @@
             Controls.Add(classType);
             Controls.Add(className);
             Controls.Add(startTime);
-            Controls.Add(button2);
+            if (UserSession.currentUser is not null) { Controls.Add(button2);}
             Name = "Assignment";
             Size = new Size(256, 190);
             ResumeLayout(false);

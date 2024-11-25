@@ -76,9 +76,16 @@ namespace Schedlify.WinForm
                     }
                     else
                     {
-                        tableLayoutPanel1.Controls.Add(new AddAssignment(date.AddDays(col), row), col, row);
+                        if (UserSession.currentUser is not null)
+                        {
+                            tableLayoutPanel1.Controls.Add(new AddAssignment(date.AddDays(col), row), col, row);
+                        }
+                        else
+                        {
+                            tableLayoutPanel1.Controls.Add(new BlankAssignment(), col, row);
+                        }
                     }
-                    
+
 
                     //tableLayoutPanel1.Controls.Add(label, col, row); // Додаємо текст у комірку
                 }
@@ -172,7 +179,10 @@ namespace Schedlify.WinForm
             BackColor = SystemColors.Window;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(1600, 1360);
-            Controls.Add(changeClassesBtn);
+            if (UserSession.currentUser is not null)
+            {
+                Controls.Add(changeClassesBtn);
+            }
             Controls.Add(logoutBtn);
             Controls.Add(weekSelector1);
             Controls.Add(panel1);
