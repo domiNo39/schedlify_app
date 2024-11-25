@@ -152,6 +152,7 @@ namespace Schedlify.WinForm
             logoutBtn.TabIndex = 16;
             logoutBtn.Text = "Вийти";
             logoutBtn.UseVisualStyleBackColor = true;
+            logoutBtn.Click += LogoutBtn_Click;
             // 
             // changeClassesBtn
             // 
@@ -161,6 +162,7 @@ namespace Schedlify.WinForm
             changeClassesBtn.TabIndex = 17;
             changeClassesBtn.Text = "Предмети";
             changeClassesBtn.UseVisualStyleBackColor = true;
+            changeClassesBtn.Click += ChangeClassesBtn_Click;
             // 
             // ScheduleForm
             // 
@@ -188,6 +190,9 @@ namespace Schedlify.WinForm
             ResumeLayout(false);
             PerformLayout();
         }
+
+        
+
 
         #endregion
 
