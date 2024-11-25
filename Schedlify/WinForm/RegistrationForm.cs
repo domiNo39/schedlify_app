@@ -52,5 +52,10 @@ namespace Schedlify.WinForm
                 MessageBox.Show("Реєстрація не вдалася. Логін вже використовується.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void RegistrationForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
