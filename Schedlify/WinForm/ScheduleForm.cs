@@ -55,7 +55,24 @@ namespace Schedlify.WinForm
 
         }
 
-        
+        private void LogoutBtn_Click(object sender, EventArgs e)
+        {
+            MainForm mainForm = new MainForm();
+            mainForm.Show();
+            this.Close();
+            UserSession.currentUser = null;
+            UserSession.currentGroup = null;
+            UserSession.currentDepartment = null;
+            UserSession.currentUniversity = null;
+        }
+
+        private void ChangeClassesBtn_Click(object sender, EventArgs e)
+        {
+            ClassesForm classesForm = new ClassesForm();
+            classesForm.Show();
+            this.Close();
+        }
+
 
         public void changeSchedule_ValueChanged(object sender, EventArgs e)
         {

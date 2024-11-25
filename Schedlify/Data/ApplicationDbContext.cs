@@ -19,6 +19,20 @@ namespace Schedlify.Data
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }
+        
+        public static ApplicationDbContext CreateInMemoryDbContext()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString()); // Unique name for each test instance
+
+            var context = new ApplicationDbContext(optionsBuilder.Options);
+
+            // Apply pending migrations to ensure the schema is set up correctly
+            context.Database.EnsureDeleted(); // Clean up previous data if re-used
+            context.Database.EnsureCreated(); // Create database with schema based on migrations
+            
+            return context;
+        }
     }
     public static class DbConnectionHelper
     {
@@ -155,7 +169,7 @@ namespace Schedlify.Data
             }
         }
     }
-    
+
     public static class ApplicationDbContextFactory
     {
         public static ApplicationDbContext CreateDbContext()
@@ -167,11 +181,11 @@ namespace Schedlify.Data
             var username = Environment.GetEnvironmentVariable("DB_USER");
             var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
-            var connectionString = $"Host={host};Port={port};Database={database};Username={username};Password={password}";
+            var connectionString =
+                $"Host={host};Port={port};Database={database};Username={username};Password={password}";
 
             optionsBuilder.UseNpgsql(connectionString);
             return new ApplicationDbContext(optionsBuilder.Options);
         }
     }
-    
 }
