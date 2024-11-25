@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Schedlify.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,21 +15,50 @@ namespace Schedlify.WinForm
     {
         DateOnly date;
         int classNumber;
+        Weekday weekDay;
 
         public AddAssignment(DateOnly _date, int _classNumber)
         {
             date = _date;
             classNumber = _classNumber;
+            weekDay = (Weekday)(((int)_date.DayOfWeek + 6) % 7);
             InitializeComponent();
         }
         private void btnCreateAssignment_Click(object sender, EventArgs e)
         {
             // Відкрити форму CreateAssignmentForm
 
-            var createAssignmentForm = new CreateAssignment();
-            createAssignmentForm.ShowDialog(); // Використовуємо ShowDialog для модального відкриття
+            //var createAssignmentForm = new CreateAssignment();
+            //createAssignmentForm.ShowDialog(); // Використовуємо ShowDialog для модального відкриття
+
+            contextMenuStrip1.Show(Cursor.Position);
         }
 
+        private void постійнаПараToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var createAssignmentForm = new CreateRegularAssignment(classNumber, weekDay);
+            createAssignmentForm.ShowDialog();
+        }
+
+        private void разВДваТижніToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void НаступногоТижняToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ЦьогоТижняToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ОдноразоваToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           
+        }
     }
-    
+
 }

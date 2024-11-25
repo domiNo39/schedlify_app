@@ -55,14 +55,9 @@ namespace Schedlify.WinForm
 
         }
 
-        private void btnCreateAssignment_Click(object sender, EventArgs e)
-        {
-            // Відкрити форму CreateAssignmentForm
-            var createAssignmentForm = new CreateAssignment();
-            createAssignmentForm.ShowDialog(); // Використовуємо ShowDialog для модального відкриття
-        }
+        
 
-        private void changeSchedule_ValueChanged(object sender, EventArgs e)
+        public void changeSchedule_ValueChanged(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
             InitializeTable(_templateSlots, _assignmentController, weekSelector1.CurrWeekStart);

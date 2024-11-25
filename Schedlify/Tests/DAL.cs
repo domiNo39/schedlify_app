@@ -122,7 +122,7 @@ public class RepoTests
             AssignmentType.Regular,
             "Tarasuk",
             "Universitetska, 1",
-            "111",
+            "111", null, null,
             DateOnly.Parse("2021-01-01"),
             null
         );

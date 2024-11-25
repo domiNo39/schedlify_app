@@ -40,7 +40,7 @@ namespace Schedlify.WinForm
             {
                 // Авторизація успішна
                 UserSession.currentUser = user;
-                MessageBox.Show("Успішний вхід! Ласкаво просимо.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+              
 
 
                 var group = _groupController.GetByAdministratorId(user.Id);

@@ -78,6 +78,7 @@ public class FillDb
                 "Університетська, 1", 
                 "116", 
                 null,
+                null, null,
                 new TimeOnly(16, 25)
             );
             assignmentsRepository.AddAssignment(
@@ -89,7 +90,7 @@ public class FillDb
                 "Вовк О.В",
                 "Університетська, 1", 
                 "116",
-                null,
+                null, null, null,
                 new TimeOnly(18, 00)
             );
             
@@ -102,7 +103,7 @@ public class FillDb
                 "Златоус С.Д.",
                 "Університетська, 1", 
                 "119",
-                null,
+                null, null, null, 
                 new TimeOnly(14, 50)
             );
             assignmentsRepository.AddAssignment(
@@ -114,7 +115,7 @@ public class FillDb
                 "Жировецький В.В.",
                 "Університетська, 1", 
                 "118",
-                null,
+                null, null, null,
                 new TimeOnly(16, 25)
             );
 
@@ -127,7 +128,7 @@ public class FillDb
                 "Венгерський П. С.",
                 "Університетська, 1",
                 "439",
-                null,
+                null, null, null,
                 new TimeOnly(16, 25)
             );
             
@@ -140,7 +141,7 @@ public class FillDb
                 "Яцик І.М",
                 "Університетська, 1", 
                 "119a",
-                null,
+                null, null, null,
                 new TimeOnly(10, 10)
             );
             assignmentsRepository.AddAssignment(
@@ -152,7 +153,7 @@ public class FillDb
                 "Яцик І.М",
                 "Університетська, 1", 
                 "119a",
-                null,
+                null, null, null,
                 new TimeOnly(11, 30)
             );
             assignmentsRepository.AddAssignment(
@@ -164,7 +165,7 @@ public class FillDb
                 "Гошко Б.М",
                 "Університетська, 1", 
                 "119a",
-                null,
+                null, null, null,
                 new TimeOnly(11, 30)
             );
             assignmentsRepository.AddAssignment(
@@ -176,7 +177,7 @@ public class FillDb
                 "Глова А.Р.",
                 "Університетська, 1", 
                 "119a",
-                null,
+                null, null, null,
                 new TimeOnly(11, 30)
             );
             assignmentsRepository.AddAssignment(
@@ -188,7 +189,7 @@ public class FillDb
                 "Гошко Б.М",
                 "Університетська, 1",
                 "118",
-                null,
+                null, null, null,
                 new TimeOnly(14, 50)
             );
             
@@ -200,8 +201,8 @@ public class FillDb
                 AssignmentType.Special,
                 "Літинський С.В",
                 "Університетська, 1",
-                "116",
-                new DateOnly(2024, 11, 26),
+                "116", null, null,
+                new DateOnly(2024, 11, 26), 
                 new TimeOnly(14, 50)
             );
             assignmentsRepository.AddAssignment(
@@ -212,7 +213,7 @@ public class FillDb
                 AssignmentType.Special,
                 "Жировецький В.В",
                 "Університетська, 1",
-                "118",
+                "118", null, null,
                 new DateOnly(2024, 11, 27),
                 new TimeOnly(18, 00)
             );

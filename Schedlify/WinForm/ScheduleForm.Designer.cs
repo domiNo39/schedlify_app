@@ -76,7 +76,7 @@ namespace Schedlify.WinForm
                     }
                     else
                     {
-                        tableLayoutPanel1.Controls.Add(new AddAssignment(date.AddDays(col), row));
+                        tableLayoutPanel1.Controls.Add(new AddAssignment(date.AddDays(col), row), col, row);
                     }
                     
 
@@ -88,16 +88,12 @@ namespace Schedlify.WinForm
         private void InitializeComponent()
         {
             scheduleLabel = new Label();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
             label_group_static = new Label();
             label_group = new Label();
             panel1 = new Panel();
             weekSelector1 = new WeekSelector();
+            logoutBtn = new Button();
+            changeClassesBtn = new Button();
             SuspendLayout();
             // 
             // scheduleLabel
@@ -112,79 +108,10 @@ namespace Schedlify.WinForm
             scheduleLabel.Text = "Розклад";
             scheduleLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label1.Location = new Point(52, 143);
-            label1.Margin = new Padding(6, 0, 6, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(163, 36);
-            label1.TabIndex = 2;
-            label1.Text = "ПОНЕДІЛОК";
-            label1.Click += label1_Click;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label2.Location = new Point(299, 143);
-            label2.Margin = new Padding(6, 0, 6, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(136, 36);
-            label2.TabIndex = 3;
-            label2.Text = "ВІВТОРОК";
-            label2.Click += label2_Click;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label3.Location = new Point(535, 143);
-            label3.Margin = new Padding(6, 0, 6, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(107, 36);
-            label3.TabIndex = 4;
-            label3.Text = "СЕРЕДА";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label4.Location = new Point(763, 143);
-            label4.Margin = new Padding(6, 0, 6, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(102, 36);
-            label4.TabIndex = 5;
-            label4.Text = "ЧЕТВЕР";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label5.Location = new Point(982, 143);
-            label5.Margin = new Padding(6, 0, 6, 0);
-            label5.Name = "label5";
-            label5.Size = new Size(140, 36);
-            label5.TabIndex = 6;
-            label5.Text = "П'ЯТНИЦЯ";
-            label5.Click += label5_Click;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label6.Location = new Point(1218, 143);
-            label6.Margin = new Padding(6, 0, 6, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(112, 36);
-            label6.TabIndex = 7;
-            label6.Text = "СУБОТА";
-            // 
             // label_group_static
             // 
             label_group_static.AutoSize = true;
-            label_group_static.Location = new Point(22, 41);
+            label_group_static.Location = new Point(169, 37);
             label_group_static.Margin = new Padding(6, 0, 6, 0);
             label_group_static.Name = "label_group_static";
             label_group_static.Size = new Size(89, 32);
@@ -195,7 +122,7 @@ namespace Schedlify.WinForm
             // label_group
             // 
             label_group.AutoSize = true;
-            label_group.Location = new Point(100, 41);
+            label_group.Location = new Point(260, 37);
             label_group.Margin = new Padding(6, 0, 6, 0);
             label_group.Name = "label_group";
             label_group.Size = new Size(80, 32);
@@ -216,7 +143,24 @@ namespace Schedlify.WinForm
             weekSelector1.Name = "weekSelector1";
             weekSelector1.Size = new Size(274, 54);
             weekSelector1.TabIndex = 15;
-            weekSelector1.dateTimePicker1.ValueChanged += changeSchedule_ValueChanged;
+            // 
+            // logoutBtn
+            // 
+            logoutBtn.Location = new Point(22, 30);
+            logoutBtn.Name = "logoutBtn";
+            logoutBtn.Size = new Size(111, 46);
+            logoutBtn.TabIndex = 16;
+            logoutBtn.Text = "Вийти";
+            logoutBtn.UseVisualStyleBackColor = true;
+            // 
+            // changeClassesBtn
+            // 
+            changeClassesBtn.Location = new Point(1409, 37);
+            changeClassesBtn.Name = "changeClassesBtn";
+            changeClassesBtn.Size = new Size(150, 46);
+            changeClassesBtn.TabIndex = 17;
+            changeClassesBtn.Text = "Предмети";
+            changeClassesBtn.UseVisualStyleBackColor = true;
             // 
             // ScheduleForm
             // 
@@ -226,16 +170,12 @@ namespace Schedlify.WinForm
             BackColor = SystemColors.Window;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(1600, 1360);
+            Controls.Add(changeClassesBtn);
+            Controls.Add(logoutBtn);
             Controls.Add(weekSelector1);
             Controls.Add(panel1);
             Controls.Add(label_group);
             Controls.Add(label_group_static);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
             Controls.Add(scheduleLabel);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Margin = new Padding(6);
@@ -243,7 +183,7 @@ namespace Schedlify.WinForm
             MinimizeBox = false;
             Name = "ScheduleForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Розклад";
+            Text = "Schedlify";
             Load += ScheduleForm_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -262,5 +202,7 @@ namespace Schedlify.WinForm
         private Label label_group;
         private Panel panel1;
         private WeekSelector weekSelector1;
+        private Button logoutBtn;
+        private Button changeClassesBtn;
     }
 }
