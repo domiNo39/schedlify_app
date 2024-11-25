@@ -135,7 +135,7 @@ namespace Schedlify.Controllers
                 slot.EndTime);
             return newRegularAssignment;
         }
-        public void delete(Guid assignmentId)
+        public void Remove(Guid assignmentId)
         {
             assigmentRepository.DeleteAssignment(assignmentId);
         }

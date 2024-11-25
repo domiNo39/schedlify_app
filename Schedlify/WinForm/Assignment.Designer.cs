@@ -28,18 +28,20 @@
         /// </summary>
         private void InitializeComponent(Models.Assignment assignment)
         {
+           
             startTime = new Label();
             className = new Label();
             classType = new Label();
             roomNumber = new Label();
             lecturer = new Label();
             address = new Label();
+            button2 = new Button();
             SuspendLayout();
             // 
             // startTime
             // 
             startTime.AutoSize = true;
-            startTime.Location = new Point(307, 14);
+            startTime.Location = new Point(140, 14);
             startTime.Name = "startTime";
             startTime.Size = new Size(58, 32);
             startTime.TabIndex = 0;
@@ -92,6 +94,15 @@
             address.Size = new Size(263, 32);
             address.TabIndex = 5;
             address.Text = assignment.Address;
+            
+            button2.Font = new Font("Segoe UI", 9F, FontStyle.Bold | FontStyle.Strikeout);
+            button2.Location = new Point(200, 0);
+            button2.Name = "button2";
+            button2.Size = new Size(50, 43);
+            button2.TabIndex = 6;
+            button2.Text = "—";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // Assignment
             // 
@@ -103,11 +114,14 @@
             Controls.Add(classType);
             Controls.Add(className);
             Controls.Add(startTime);
+            Controls.Add(button2);
             Name = "Assignment";
             Size = new Size(256, 190);
             ResumeLayout(false);
             PerformLayout();
+
         }
+
 
         #endregion
 
@@ -117,5 +131,6 @@
         private Label roomNumber;
         private Label lecturer;
         private Label address;
+        private Button button2;
     }
 }

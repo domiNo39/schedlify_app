@@ -35,17 +35,18 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             постійнаПараToolStripMenuItem = new ToolStripMenuItem();
             разВДваТижніToolStripMenuItem = new ToolStripMenuItem();
-            одноразоваToolStripMenuItem = new ToolStripMenuItem();
             цьогоТижняToolStripMenuItem = new ToolStripMenuItem();
             наступногоТижняToolStripMenuItem = new ToolStripMenuItem();
+            одноразоваToolStripMenuItem = new ToolStripMenuItem();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // button1
             // 
             button1.Location = new Point(0, 0);
+            button1.Margin = new Padding(2, 1, 2, 1);
             button1.Name = "button1";
-            button1.Size = new Size(246, 180);
+            button1.Size = new Size(132, 84);
             button1.TabIndex = 0;
             button1.Text = "Додати";
             button1.UseVisualStyleBackColor = true;
@@ -56,12 +57,12 @@
             contextMenuStrip1.ImageScalingSize = new Size(32, 32);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { постійнаПараToolStripMenuItem, разВДваТижніToolStripMenuItem, одноразоваToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(276, 118);
+            contextMenuStrip1.Size = new Size(167, 70);
             // 
             // постійнаПараToolStripMenuItem
             // 
             постійнаПараToolStripMenuItem.Name = "постійнаПараToolStripMenuItem";
-            постійнаПараToolStripMenuItem.Size = new Size(300, 38);
+            постійнаПараToolStripMenuItem.Size = new Size(166, 22);
             постійнаПараToolStripMenuItem.Text = "постійна пара";
             постійнаПараToolStripMenuItem.Click += постійнаПараToolStripMenuItem_Click;
             // 
@@ -69,39 +70,39 @@
             // 
             разВДваТижніToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { цьогоТижняToolStripMenuItem, наступногоТижняToolStripMenuItem });
             разВДваТижніToolStripMenuItem.Name = "разВДваТижніToolStripMenuItem";
-            разВДваТижніToolStripMenuItem.Size = new Size(300, 38);
+            разВДваТижніToolStripMenuItem.Size = new Size(166, 22);
             разВДваТижніToolStripMenuItem.Text = "періодична пара";
             разВДваТижніToolStripMenuItem.Click += разВДваТижніToolStripMenuItem_Click;
-            // 
-            // одноразоваToolStripMenuItem
-            // 
-            одноразоваToolStripMenuItem.Name = "одноразоваToolStripMenuItem";
-            одноразоваToolStripMenuItem.Size = new Size(275, 38);
-            одноразоваToolStripMenuItem.Text = "одноразова";
-            одноразоваToolStripMenuItem.Click += ОдноразоваToolStripMenuItem_Click;
-
             // 
             // цьогоТижняToolStripMenuItem
             // 
             цьогоТижняToolStripMenuItem.Name = "цьогоТижняToolStripMenuItem";
-            цьогоТижняToolStripMenuItem.Size = new Size(359, 44);
+            цьогоТижняToolStripMenuItem.Size = new Size(174, 22);
             цьогоТижняToolStripMenuItem.Text = "цього тижня";
             цьогоТижняToolStripMenuItem.Click += ЦьогоТижняToolStripMenuItem_Click;
             // 
             // наступногоТижняToolStripMenuItem
             // 
             наступногоТижняToolStripMenuItem.Name = "наступногоТижняToolStripMenuItem";
-            наступногоТижняToolStripMenuItem.Size = new Size(359, 44);
+            наступногоТижняToolStripMenuItem.Size = new Size(174, 22);
             наступногоТижняToolStripMenuItem.Text = "наступного тижня";
             наступногоТижняToolStripMenuItem.Click += НаступногоТижняToolStripMenuItem_Click;
             // 
+            // одноразоваToolStripMenuItem
+            // 
+            одноразоваToolStripMenuItem.Name = "одноразоваToolStripMenuItem";
+            одноразоваToolStripMenuItem.Size = new Size(166, 22);
+            одноразоваToolStripMenuItem.Text = "одноразова";
+            одноразоваToolStripMenuItem.Click += ОдноразоваToolStripMenuItem_Click;
+            // 
             // AddAssignment
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(button1);
+            Margin = new Padding(2, 1, 2, 1);
             Name = "AddAssignment";
-            Size = new Size(256, 190);
+            Size = new Size(138, 89);
             contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
         }
