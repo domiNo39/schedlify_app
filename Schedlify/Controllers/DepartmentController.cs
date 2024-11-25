@@ -17,6 +17,12 @@ namespace Schedlify.Controllers
             ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
             departmentRepository = new DepartmentRepository(_context);
         }
+        
+        public DepartmentController(ApplicationDbContext context)
+        {
+            ApplicationDbContext _context = context;
+            departmentRepository = new DepartmentRepository(_context);
+        }
         public List<Department> Search(Guid universityId,string namePart)
         {
             var departments = departmentRepository.GetByNamePartAndUniversityId(universityId, namePart);
