@@ -12,6 +12,7 @@ namespace Schedlify.WinForm
         private readonly UniversityController _universityController;
         private readonly DepartmentController _departmentController;
         private readonly GroupController _groupController;
+        private readonly TemplateSlotController _templateSlotController;
 
         public UniDepGroupForm()
         {
@@ -19,6 +20,7 @@ namespace Schedlify.WinForm
             _universityController = new UniversityController();
             _departmentController = new DepartmentController();
             _groupController = new GroupController();
+            _templateSlotController = new TemplateSlotController();
 
             universityComboBox.TextChanged += UniversityComboBox_TextChanged;
             departmentComboBox.TextChanged += DepartmentComboBox_TextChanged;
@@ -94,7 +96,6 @@ namespace Schedlify.WinForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Помилка при оновленні списку: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -122,8 +123,18 @@ namespace Schedlify.WinForm
             UserSession.currentUniversity = university;
             UserSession.currentDepartment = department;
             UserSession.currentGroup = group;
-            ScheduleForm scheduleForm = new ScheduleForm();
-            scheduleForm.Show();
+            var slots = _templateSlotController.GetByDepartmentId(department.Id);
+            if (slots.Count() != 0)
+            {
+                ScheduleForm scheduleForm = new ScheduleForm();
+                scheduleForm.Show();
+            }
+            else
+            {
+                TimeSlotsForm timeSlotsForm = new TimeSlotsForm();
+                timeSlotsForm.Show();
+            }
+            
 
             // Закриваємо поточну форму
             this.Close();

@@ -129,7 +129,7 @@
             registrationForm.Show();
 
             // (Необов'язково) Закриваємо поточне вікно, якщо не хочемо, щоб воно залишалося відкритим
-            this.Close(); // Приховуємо головне вікно
+            this.Hide(); // Приховуємо головне вікно
         }
 
         private void loginButton_Click(object sender, EventArgs e)
