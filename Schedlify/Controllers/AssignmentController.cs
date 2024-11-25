@@ -21,6 +21,7 @@ namespace Schedlify.Controllers
         {
             ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
             this.assigmentRepository = new AssignmentsRepository(_context);
+            this.templateSlotRepository = new TemplateSlotRepository(_context);
         }
         public bool IsEvenWeek(DateOnly date)
         {
