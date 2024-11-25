@@ -12,11 +12,19 @@ namespace Schedlify.Controllers
     public class UsersController
     {
         private readonly UserRepository userRepository;
+
         public UsersController()
         {
             ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
             userRepository = new UserRepository(_context);
         }
+
+        public UsersController(ApplicationDbContext context)
+        {
+            ApplicationDbContext _context = context;
+            userRepository = new UserRepository(_context);
+        }
+
         public User? Login(string login, string password)
         {
             var user = userRepository.GetByLogin(login);
@@ -47,8 +55,5 @@ namespace Schedlify.Controllers
 
             return newUser; 
         }
-
-
-
     }
 }

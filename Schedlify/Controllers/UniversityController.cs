@@ -17,6 +17,11 @@ namespace Schedlify.Controllers
             ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
             universityRepository = new UniversityRepository(_context);
         }
+        public UniversityController(ApplicationDbContext context)
+        {
+            ApplicationDbContext _context = context;
+            universityRepository = new UniversityRepository(_context);
+        }
         public List<University> Search(string namePart)
         {
             var universities = universityRepository.GetByNamePart(namePart);
@@ -35,8 +40,5 @@ namespace Schedlify.Controllers
 
             return newUniversity; 
         }
-
-
-
     }
 }
