@@ -23,6 +23,12 @@ namespace Schedlify.Controllers
             this.assigmentRepository = new AssignmentsRepository(_context);
             this.templateSlotRepository = new TemplateSlotRepository(_context);
         }
+        public AssignmentController(ApplicationDbContext context)
+        {
+            ApplicationDbContext _context = context;
+            this.assigmentRepository = new AssignmentsRepository(_context);
+            this.templateSlotRepository = new TemplateSlotRepository(_context);
+        }
         public static bool IsEvenWeek(DateOnly date)
         {
 

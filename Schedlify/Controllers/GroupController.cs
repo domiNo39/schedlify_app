@@ -17,6 +17,11 @@ namespace Schedlify.Controllers
             ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
             groupRepository = new GroupRepository(_context);
         }
+        public GroupController(ApplicationDbContext context)
+        {
+            ApplicationDbContext _context = context;
+            groupRepository = new GroupRepository(_context);
+        }
         public List<Group> Search(Guid departmentId,string namePart)
         {
             var groups = groupRepository.GetByNamePartAndDepartmentId(namePart, departmentId);
