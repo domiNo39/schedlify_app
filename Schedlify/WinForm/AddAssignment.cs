@@ -57,7 +57,8 @@ namespace Schedlify.WinForm
 
         private void ОдноразоваToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+            var createAssignmentForm = new CreateSpecialAssignment(classNumber);
+            createAssignmentForm.ShowDialog();
         }
     }
 
