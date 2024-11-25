@@ -74,6 +74,7 @@ public class AssignmentsRepository
 
         // Add the new assignment to the context
         _context.Assignments.Add(assignment);
+        _context.SaveChanges();
 
         return assignment;
     }
