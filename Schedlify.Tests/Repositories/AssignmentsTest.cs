@@ -6,14 +6,14 @@ using Schedlify.Models;
 using Schedlify.Data;
 
 
-public class AssignmentsTest : IClassFixture<EnvFixture>
+public class AssignmentsRepoTest : IClassFixture<EnvFixture>
 {
     private readonly ApplicationDbContext _context;
     private readonly AssignmentsRepository _repository;
     private readonly Guid _groupId;
     private readonly Guid _classId;
 
-    public AssignmentsTest()
+    public AssignmentsRepoTest()
     {
         // Set up an in-memory context for each test
         _context = DesignTimeDbContextFactory.CreateInMemoryDbContext();

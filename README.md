@@ -11,6 +11,13 @@
 ```cd Schedlify.Tests```
 ```dotnet test```
 
+
+# Logging
+
+Logging is integrated at BLL - Schedlify.Controllers level
+
+see ```./Schedlify/bin/Debug/net8.0-windows/logs```
+
 # Materials
 
 [Docs](https://docs.google.com/document/d/1b1sienzpzSJdAO6w7TO97m8XYqsMDj1XsN3b0c_ZVUk/edit?usp=sharing)
