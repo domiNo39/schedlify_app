@@ -142,7 +142,7 @@ namespace Schedlify.WinForm
             weekSelector1.Margin = new Padding(6, 6, 6, 6);
             weekSelector1.Name = "weekSelector1";
             weekSelector1.Size = new Size(274, 54);
-            weekSelector1.TabIndex = 15;
+            weekSelector1.dateTimePicker1.ValueChanged += changeSchedule_ValueChanged;
             // 
             // logoutBtn
             // 
@@ -152,6 +152,7 @@ namespace Schedlify.WinForm
             logoutBtn.TabIndex = 16;
             logoutBtn.Text = "Вийти";
             logoutBtn.UseVisualStyleBackColor = true;
+            logoutBtn.Click += LogoutBtn_Click;
             // 
             // changeClassesBtn
             // 
@@ -161,6 +162,7 @@ namespace Schedlify.WinForm
             changeClassesBtn.TabIndex = 17;
             changeClassesBtn.Text = "Предмети";
             changeClassesBtn.UseVisualStyleBackColor = true;
+            changeClassesBtn.Click += ChangeClassesBtn_Click;
             // 
             // ScheduleForm
             // 
@@ -188,6 +190,9 @@ namespace Schedlify.WinForm
             ResumeLayout(false);
             PerformLayout();
         }
+
+        
+
 
         #endregion
 

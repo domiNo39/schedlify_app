@@ -29,8 +29,9 @@ namespace Schedlify.Controllers
             this.assigmentRepository = new AssignmentsRepository(_context);
             this.templateSlotRepository = new TemplateSlotRepository(_context);
         }
-        public bool IsEvenWeek(DateOnly date)
+        public static bool IsEvenWeek(DateOnly date)
         {
+
             int weekOfYear = (date.DayOfYear - 1) / 7 + 1;
             return weekOfYear % 2 == 0;
         }
@@ -39,7 +40,7 @@ namespace Schedlify.Controllers
             int dayOfWeek = (int)date.DayOfWeek; 
             List<Assignment> regularAssignments = assigmentRepository.GetAssignmentsByWeekday(groupId, (Weekday)((dayOfWeek + 6) % 7), AssignmentType.Regular).ToList();
             List<Assignment> intervalAssignments;
-            if (this.IsEvenWeek(date))
+            if (AssignmentController.IsEvenWeek(date))
             {
                 intervalAssignments = assigmentRepository.GetAssignmentsByWeekday(groupId, (Weekday)((dayOfWeek + 6) % 7), AssignmentType.Even).ToList();
             }
@@ -79,7 +80,66 @@ namespace Schedlify.Controllers
                 slot.EndTime);
             return newRegularAssignment;
         }
-        
+
+        public Assignment? AddIntervalAssignment(
+            Weekday weekDay,
+            int classNumber,
+            Guid classId,
+            AssignmentType assignmentType,
+            string? lecturer = null,
+            string? address = null,
+            string? roomNumber = null,
+            ClassType? classType = null,
+            Mode? mode = null)
+        {
+            TemplateSlot slot = this.templateSlotRepository.GetByDepartmentIdAndClassNumber(UserSession.currentDepartment.Id, classNumber);
+            Assignment? newRegularAssignment = assigmentRepository.AddAssignment(
+                UserSession.currentGroup.Id,
+                classId,
+                weekDay,
+                slot.StartTime,
+                assignmentType,
+                lecturer,
+                address,
+                roomNumber,
+                classType,
+                mode,
+                null,
+                slot.EndTime);
+            return newRegularAssignment;
+        }
+
+        public Assignment? AddSpecialAssignment(
+            DateOnly date,
+            int classNumber,
+            Guid classId,
+            string? lecturer = null,
+            string? address = null,
+            string? roomNumber = null,
+            ClassType? classType = null,
+            Mode? mode = null)
+        {
+            TemplateSlot slot = this.templateSlotRepository.GetByDepartmentIdAndClassNumber(UserSession.currentDepartment.Id, classNumber);
+            Assignment? newRegularAssignment = assigmentRepository.AddAssignment(
+                UserSession.currentGroup.Id,
+                classId,
+                (Weekday)(((int)date.DayOfWeek + 6) % 7),
+                slot.StartTime,
+                AssignmentType.Special,
+                lecturer,
+                address,
+                roomNumber,
+                classType,
+                mode,
+                date,
+                slot.EndTime);
+            return newRegularAssignment;
+        }
+        public void delete(Guid assignmentId)
+        {
+            assigmentRepository.DeleteAssignment(assignmentId);
+        }
+
 
 
 

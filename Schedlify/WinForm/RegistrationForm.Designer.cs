@@ -28,83 +28,83 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.titleLabel = new System.Windows.Forms.Label();
-            this.loginLabel = new System.Windows.Forms.Label();
-            this.loginTextBox = new System.Windows.Forms.TextBox();
-            this.passwordLabel = new System.Windows.Forms.Label();
-            this.passwordTextBox = new System.Windows.Forms.TextBox();
-            this.createAccountButton = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            titleLabel = new Label();
+            loginLabel = new Label();
+            loginTextBox = new TextBox();
+            passwordLabel = new Label();
+            passwordTextBox = new TextBox();
+            createAccountButton = new Button();
+            SuspendLayout();
             // 
             // titleLabel
             // 
-            this.titleLabel.AutoSize = true;
-            this.titleLabel.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.titleLabel.Location = new System.Drawing.Point(20, 20);
-            this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(116, 29);
-            this.titleLabel.TabIndex = 0;
-            this.titleLabel.Text = "Schedlify";
+            titleLabel.AutoSize = true;
+            titleLabel.Font = new Font("Arial", 18F, FontStyle.Bold);
+            titleLabel.Location = new Point(20, 20);
+            titleLabel.Name = "titleLabel";
+            titleLabel.Size = new Size(142, 29);
+            titleLabel.TabIndex = 0;
+            titleLabel.Text = "Реєстрація";
             // 
             // loginLabel
             // 
-            this.loginLabel.AutoSize = true;
-            this.loginLabel.Location = new System.Drawing.Point(50, 70);
-            this.loginLabel.Name = "loginLabel";
-            this.loginLabel.Size = new System.Drawing.Size(39, 15);
-            this.loginLabel.TabIndex = 1;
-            this.loginLabel.Text = "Логін";
+            loginLabel.AutoSize = true;
+            loginLabel.Location = new Point(50, 70);
+            loginLabel.Name = "loginLabel";
+            loginLabel.Size = new Size(37, 15);
+            loginLabel.TabIndex = 1;
+            loginLabel.Text = "Логін";
             // 
             // loginTextBox
             // 
-            this.loginTextBox.Location = new System.Drawing.Point(50, 90);
-            this.loginTextBox.Name = "loginTextBox";
-            this.loginTextBox.Size = new System.Drawing.Size(300, 23);
-            this.loginTextBox.TabIndex = 2;
+            loginTextBox.Location = new Point(50, 90);
+            loginTextBox.Name = "loginTextBox";
+            loginTextBox.Size = new Size(300, 23);
+            loginTextBox.TabIndex = 2;
             // 
             // passwordLabel
             // 
-            this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(50, 130);
-            this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(47, 15);
-            this.passwordLabel.TabIndex = 3;
-            this.passwordLabel.Text = "Пароль";
+            passwordLabel.AutoSize = true;
+            passwordLabel.Location = new Point(50, 130);
+            passwordLabel.Name = "passwordLabel";
+            passwordLabel.Size = new Size(49, 15);
+            passwordLabel.TabIndex = 3;
+            passwordLabel.Text = "Пароль";
             // 
             // passwordTextBox
             // 
-            this.passwordTextBox.Location = new System.Drawing.Point(50, 150);
-            this.passwordTextBox.Name = "passwordTextBox";
-            this.passwordTextBox.PasswordChar = '*';
-            this.passwordTextBox.Size = new System.Drawing.Size(300, 23);
-            this.passwordTextBox.TabIndex = 4;
+            passwordTextBox.Location = new Point(50, 150);
+            passwordTextBox.Name = "passwordTextBox";
+            passwordTextBox.PasswordChar = '*';
+            passwordTextBox.Size = new Size(300, 23);
+            passwordTextBox.TabIndex = 4;
             // 
             // createAccountButton
             // 
-            this.createAccountButton.Location = new System.Drawing.Point(50, 190);
-            this.createAccountButton.Name = "createAccountButton";
-            this.createAccountButton.Size = new System.Drawing.Size(300, 40);
-            this.createAccountButton.TabIndex = 5;
-            this.createAccountButton.Text = "Створити аккаунт";
-            this.createAccountButton.UseVisualStyleBackColor = true;
-            this.createAccountButton.Click += new System.EventHandler(this.createAccountButton_Click);
+            createAccountButton.Location = new Point(50, 190);
+            createAccountButton.Name = "createAccountButton";
+            createAccountButton.Size = new Size(300, 40);
+            createAccountButton.TabIndex = 5;
+            createAccountButton.Text = "Створити аккаунт";
+            createAccountButton.UseVisualStyleBackColor = true;
+            createAccountButton.Click += createAccountButton_Click;
             // 
             // RegistrationForm
             // 
-            this.ClientSize = new System.Drawing.Size(400, 300);
-            this.Controls.Add(this.createAccountButton);
-            this.Controls.Add(this.passwordTextBox);
-            this.Controls.Add(this.passwordLabel);
-            this.Controls.Add(this.loginTextBox);
-            this.Controls.Add(this.loginLabel);
-            this.Controls.Add(this.titleLabel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "RegistrationForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Реєстрація";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            ClientSize = new Size(400, 300);
+            Controls.Add(createAccountButton);
+            Controls.Add(passwordTextBox);
+            Controls.Add(passwordLabel);
+            Controls.Add(loginTextBox);
+            Controls.Add(loginLabel);
+            Controls.Add(titleLabel);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Name = "RegistrationForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Schedlify";
+            Load += RegistrationForm_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
