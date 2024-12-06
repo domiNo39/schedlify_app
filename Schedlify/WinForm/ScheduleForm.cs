@@ -11,6 +11,7 @@ namespace Schedlify.WinForm
         AssignmentController _assignmentController;
         TemplateSlotController _templateSlotController;
         List<TemplateSlot> _templateSlots;
+        DateOnly previousWeek;
 
         public ScheduleForm()
         {
@@ -20,7 +21,11 @@ namespace Schedlify.WinForm
            
             
             InitializeComponent();
+            var size = this.Size;
+            AutoSize = false;
+            this.Size = size;
             InitializeTable(_templateSlots, _assignmentController, weekSelector1.CurrWeekStart);
+            previousWeek = weekSelector1.CurrWeekStart;
             // Встановлюємо текст "Розклад"
             scheduleLabel.Text = "Розклад";
         }
@@ -76,8 +81,26 @@ namespace Schedlify.WinForm
 
         public void changeSchedule_ValueChanged(object sender, EventArgs e)
         {
+            panel1.Location = new Point(22, 82);
+            if ( previousWeek < weekSelector1.CurrWeekStart)
+            {
+                while (panel1.Location.X >-1300)
+                    {
+                        panel1.Location = new Point(panel1.Location.X-1, panel1.Location.Y);
+                    }
+            }
+            else if (previousWeek > weekSelector1.CurrWeekStart)
+            {
+                while (panel1.Location.X < 1400)
+                {
+                    panel1.Location = new Point(panel1.Location.X + 1, panel1.Location.Y);
+                }
+            }
+            
             panel1.Controls.Clear();
+            panel1.Location=new Point(22, 82);
             InitializeTable(_templateSlots, _assignmentController, weekSelector1.CurrWeekStart);
+            previousWeek = weekSelector1.CurrWeekStart;
         }
     }
 }

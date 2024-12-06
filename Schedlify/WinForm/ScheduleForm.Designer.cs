@@ -178,7 +178,8 @@ namespace Schedlify.WinForm
             AutoSize = true;
             BackColor = SystemColors.Window;
             BackgroundImageLayout = ImageLayout.None;
-            ClientSize = new Size(1600, 1360);
+            ClientSize = new Size(1600, 1600);
+
             if (UserSession.currentUser is not null)
             {
                 Controls.Add(changeClassesBtn);
@@ -199,6 +200,7 @@ namespace Schedlify.WinForm
             Load += ScheduleForm_Load;
             ResumeLayout(false);
             PerformLayout();
+            
         }
 
         
