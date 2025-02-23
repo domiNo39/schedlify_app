@@ -27,6 +27,6 @@
 
 [Code cleanup using StyleCop](https://docs.google.com/document/d/1n8LaX1FmXjMZPHIj3S3VASMR5uw0clkMosKi7ZoSFec/edit?usp=sharing)
 
-# Second term
+## Second term
 
 [Usecase diagram](https://drive.google.com/file/d/11mxZSBqLtl4lbK6AaWhjAYQDxAGefygg/view?usp=sharing)
