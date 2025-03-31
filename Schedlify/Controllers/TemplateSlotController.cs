@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Schedlify.Data;
-using Schedlify.Repositories;
+﻿using Schedlify.Global;
 using Schedlify.Models;
 using Schedlify.Utils;
 
@@ -12,35 +6,45 @@ namespace Schedlify.Controllers
 {
     public class TemplateSlotController
     {
-        private readonly TemplateSlotRepository templateSlotRepository;
+        private readonly ApiClient _apiClient;
+        private readonly long _userId;
+
         public TemplateSlotController()
         {
-            ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
-            templateSlotRepository = new TemplateSlotRepository(_context);
-        }
-        public TemplateSlotController(ApplicationDbContext context)
-        {
-            ApplicationDbContext _context = context;
-            templateSlotRepository = new TemplateSlotRepository(_context);
-        }
-        public List<TemplateSlot> GetByDepartmentId(Guid departmentId)
-        {
-            var templateSlots = templateSlotRepository.GetByDepartmentId(departmentId);
-            return templateSlots.ToList();
+            _apiClient = new ApiClient();
+            _userId = GetCurrentUserId();
         }
 
-        public void AddTemplateSlots(Guid departmentId, List<Slot> slotList)
+        public TemplateSlotController(ApiClient apiClient)
         {
-            int i = 0;
-            slotList=slotList.OrderBy(p => p.startTime).ToList();
-            foreach (Slot slot in slotList)
+            _apiClient = apiClient;
+            _userId = GetCurrentUserId();
+        }
+
+        private long GetCurrentUserId()
+        {
+            return UserSession.currentUser.Id;
+        }
+
+        public async Task<List<TemplateSlot>> GetByDepartmentId(long departmentId)
+        {
+            return await _apiClient.GetAsync<List<TemplateSlot>>($"/template-slots/by-department/{departmentId}", _userId);
+        }
+
+        public async Task AddTemplateSlots(long departmentId, List<Slot> slotList)
+        {
+            var templateSlotsData = new
             {
-                templateSlotRepository.Add(departmentId, slot.startTime, slot.endTime, i);
-                i++;
-            }
+                DepartmentId = departmentId,
+                Slots = slotList.OrderBy(s => s.startTime).Select((slot, index) => new
+                {
+                    StartTime = slot.startTime,
+                    EndTime = slot.endTime,
+                    Order = index
+                }).ToList()
+            };
+
+            await _apiClient.PostAsync<object>("/template-slots/bulk", _userId, templateSlotsData);
         }
-
-
-
     }
 }

@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class TemplateSlot
 {
     [Key]
-    public Guid Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
-    public Guid DepartmentId { get; set; }
+    public long DepartmentId { get; set; }
 
     [Required]
     public TimeOnly StartTime { get; set; }

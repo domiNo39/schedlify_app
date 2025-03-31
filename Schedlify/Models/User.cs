@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 public class User
 {
     [Key]
-    public Guid Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
     [StringLength(32)]

@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 public class University
 {
     [Key]
-    public Guid Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
     [StringLength(64)]

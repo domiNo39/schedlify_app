@@ -6,13 +6,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Assignment
 {
     [Key]
-    public Guid Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
-    public Guid GroupId { get; set; }
+    public long GroupId { get; set; }
 
     [Required]
-    public Guid ClassId { get; set; }
+    public long ClassId { get; set; }
 
     public ClassType? ClassType { get; set; }
     public Mode? Mode { get; set; }

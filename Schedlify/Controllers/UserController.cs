@@ -1,59 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Schedlify.Data;
-using Schedlify.Repositories;
+﻿//COPYRIGHT NIGGERCODE
 using Schedlify.Models;
 
 namespace Schedlify.Controllers
 {
     public class UsersController
     {
-        private readonly UserRepository userRepository;
+        private readonly ApiClient _apiClient;
+        private readonly long _userId = 0; //irrelevant?
 
         public UsersController()
         {
-            ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
-            userRepository = new UserRepository(_context);
+            _apiClient = new ApiClient();
+
         }
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(ApiClient apiClient)
         {
-            ApplicationDbContext _context = context;
-            userRepository = new UserRepository(_context);
+            _apiClient = apiClient;
         }
 
-        public User? Login(string login, string password)
+        public async Task<User?> Login(string login, string password)
         {
-            var user = userRepository.GetByLogin(login);
-            if (user == null)
+            var loginData = new
             {
-                return null;
-            }
-
-            if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
-            {
-                return null;
-            }
-
-            return user;
+                Login = login,
+                Password = password
+            };
+            return await _apiClient.PostAsync<User>("/users/login", _userId, loginData);
         }
 
-        public User? Register(string login, string password)
+        public async Task<User?> Register(string login, string password)
         {
-            var existingUser = userRepository.GetByLogin(login);
-            if (existingUser != null)
+            var registerData = new
             {
-                return null;
-            }
-
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
-
-            var newUser = userRepository.Add(login, passwordHash);
-
-            return newUser; 
+                Login = login,
+                Password = password
+            };
+            return await _apiClient.PostAsync<User>("/users/register", _userId, registerData);
         }
     }
 }

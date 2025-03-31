@@ -8,10 +8,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Department
 {
     [Key]
-    public Guid Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
-    public Guid UniversityId { get; set; }
+    public long UniversityId { get; set; }
 
     [Required]
     [StringLength(64)]
