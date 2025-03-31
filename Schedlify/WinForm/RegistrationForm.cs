@@ -36,14 +36,12 @@ namespace Schedlify.WinForm
             {
                 // Реєстрація успішна
                 UserSession.currentUser = newUser;
-                MessageBox.Show("Реєстрація успішна! Ваш акаунт створено.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //this.Close(); // Закриваємо форму після успішної реєстрації
                 // Закриваємо поточне вікно
-                this.Hide();
+                this.Close();
 
                 // Відкриваємо форму UniDepGroupForm
                 var uniDepGroupForm = new UniDepGroupForm();
-                uniDepGroupForm.FormClosed += (s, args) => this.Close(); // Закриваємо RegistrationForm після закриття UniDepGroupForm
                 uniDepGroupForm.Show();
             }
             else
@@ -51,6 +49,11 @@ namespace Schedlify.WinForm
                 // Реєстрація не вдалася (можливо, логін вже існує)
                 MessageBox.Show("Реєстрація не вдалася. Логін вже використовується.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void RegistrationForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

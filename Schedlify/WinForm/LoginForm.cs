@@ -16,7 +16,7 @@ namespace Schedlify.WinForm
         {
             InitializeComponent();
             _usersController = new UsersController();
-            _groupController = new GroupController(); 
+            _groupController = new GroupController();
             _templateSlotController = new TemplateSlotController();
         }
 
@@ -40,16 +40,16 @@ namespace Schedlify.WinForm
             {
                 // Авторизація успішна
                 UserSession.currentUser = user;
-                MessageBox.Show("Успішний вхід! Ласкаво просимо.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
 
 
                 var group = _groupController.GetByAdministratorId(user.Id);
-                
+
                 if (group != null)
                 {
                     UserSession.currentGroup = group;
                     UserSession.currentDepartment = group.Department;
-                    var timeSlots = _templateSlotController.GetByDepartmentId(group.Id);
+                    var timeSlots = _templateSlotController.GetByDepartmentId(group.DepartmentId);
                     if (!timeSlots.IsNullOrEmpty())
                     {
                         ScheduleForm scheduleForm = new ScheduleForm();
@@ -60,7 +60,7 @@ namespace Schedlify.WinForm
                         TimeSlotsForm timeSlotsForm = new TimeSlotsForm();
                         timeSlotsForm.Show();
                     }
-                    
+
                 }
                 else
                 {
@@ -75,6 +75,11 @@ namespace Schedlify.WinForm
                 // Авторизація не вдалася (логін/пароль некоректні)
                 MessageBox.Show("Невірний логін або пароль. Спробуйте ще раз.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

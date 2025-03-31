@@ -51,7 +51,7 @@
             AddButton.TabIndex = 5;
             AddButton.Text = "Додати";
             AddButton.UseVisualStyleBackColor = true;
-            AddButton.Click += new EventHandler(AddButton_Click);
+            AddButton.Click += AddButton_Click;
             // 
             // DeleteButton
             // 
@@ -61,7 +61,7 @@
             DeleteButton.TabIndex = 6;
             DeleteButton.Text = "Видалити";
             DeleteButton.UseVisualStyleBackColor = true;
-            DeleteButton.Click += new EventHandler(DeleteButton_Click);
+            DeleteButton.Click += DeleteButton_Click;
             // 
             // EditButton
             // 
@@ -71,37 +71,40 @@
             EditButton.TabIndex = 7;
             EditButton.Text = "Редагувати";
             EditButton.UseVisualStyleBackColor = true;
-            EditButton.Click += new EventHandler(EditButton_Click);
+            EditButton.Click += EditButton_Click;
             // 
             // NextButton
             // 
-            NextButton.Location = new Point(350, 268);
+            NextButton.Location = new Point(350, 380);
             NextButton.Name = "NextButton";
             NextButton.Size = new Size(209, 48);
             NextButton.TabIndex = 8;
-            NextButton.Text = "Розклад";
+            NextButton.Text = "Далі";
             NextButton.UseVisualStyleBackColor = true;
-            NextButton.Click += new EventHandler(NextButton_Click);
+            NextButton.Click += NextButton_Click;
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom; // Використовуємо CustomFormat
-            this.dateTimePicker1.CustomFormat = "HH:mm"; // Формат тільки години та хвилини
-            this.dateTimePicker1.ShowUpDown = true; // Вимикаємо календар
-            this.dateTimePicker1.Location = new System.Drawing.Point(66, 20);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(198, 39);
-            this.dateTimePicker1.TabIndex = 9;
+            dateTimePicker1.CustomFormat = "HH:mm";
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.Location = new Point(66, 20);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.ShowUpDown = true;
+            dateTimePicker1.Size = new Size(198, 39);
+            dateTimePicker1.TabIndex = 9;
+            dateTimePicker1.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
             // 
             // dateTimePicker2
             // 
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom; // Використовуємо CustomFormat
-            this.dateTimePicker2.CustomFormat = "HH:mm"; // Формат тільки години та хвилини
-            this.dateTimePicker2.ShowUpDown = true; // Вимикаємо календар
-            this.dateTimePicker2.Location = new System.Drawing.Point(320, 20);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(239, 39);
-            this.dateTimePicker2.TabIndex = 10;
+            dateTimePicker2.CustomFormat = "HH:mm";
+            dateTimePicker2.Format = DateTimePickerFormat.Custom;
+            dateTimePicker2.Location = new Point(320, 20);
+            dateTimePicker2.Name = "dateTimePicker2";
+            dateTimePicker2.ShowUpDown = true;
+            dateTimePicker2.Size = new Size(239, 39);
+            dateTimePicker2.TabIndex = 10;
+            dateTimePicker2.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
+            // 
             // 
             // TimeSlotsForm
             // 

@@ -81,6 +81,6 @@
 
 
 
-        private DateTimePicker dateTimePicker1;
+        public DateTimePicker dateTimePicker1;
     }
 }

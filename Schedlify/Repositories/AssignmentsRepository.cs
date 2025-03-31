@@ -17,8 +17,9 @@ public class AssignmentsRepository
     public IEnumerable<Assignment> GetAssignmentsByWeekday(Guid groupId, Weekday weekday, AssignmentType assignmentType)
     {
         return _context.Assignments
+            .Include(d => d.Class)
             .Where(a => a.GroupId == groupId && a.Weekday == weekday)
-            .Where(a => a.Type == assignmentType)
+            .Where(a => a.Type == assignmentType && a.Date == null)
             .OrderBy(a => a.StartTime)
             .ToList();
     }
@@ -26,6 +27,7 @@ public class AssignmentsRepository
     public IEnumerable<Assignment> GetAssignmentsByDate(Guid groupId, DateOnly date)
     {
         return _context.Assignments
+            .Include(d => d.Class)
             .Where(a => a.GroupId == groupId && a.Date == date)
             .OrderBy(a => a.StartTime)
             .ToList();
@@ -40,6 +42,8 @@ public class AssignmentsRepository
         string? lecturer = null,
         string? address = null,
         string? roomNumber = null,
+        ClassType? classType = null,
+        Mode? mode = null,
         DateOnly? date = null,
         TimeOnly? endTime = null
         )
@@ -48,16 +52,6 @@ public class AssignmentsRepository
         if (groupId == Guid.Empty || classId == Guid.Empty)
         {
             throw new ArgumentException("GroupId and ClassId must be valid GUIDs.");
-        }
-
-        // Optionally: Check if the assignment already exists based on specific criteria (e.g., same group, weekday, time)
-        bool assignmentExists = _context.Assignments.Any(a => a.GroupId == groupId && 
-                                                              a.Weekday == weekday && 
-                                                              a.StartTime == startTime);
-
-        if (assignmentExists)
-        {
-            throw new InvalidOperationException("An assignment for this group, weekday, and start time already exists.");
         }
 
         // Create a new Assignment entity
@@ -72,18 +66,31 @@ public class AssignmentsRepository
             Lecturer = lecturer,
             Address = address,
             RoomNumber = roomNumber,
+            ClassType = classType,
+            Mode = mode,
             Date = date,
-            EndTime = endTime
+            EndTime = endTime,
         };
 
         // Add the new assignment to the context
         _context.Assignments.Add(assignment);
+        _context.SaveChanges();
 
         return assignment;
     }
     
-    public void EditAssignment(Guid assignmentId, Guid groupId, Guid classId, Weekday weekday, TimeOnly startTime, AssignmentType assignmentType, 
-                               string? lecturer = null, string? address = null, string? roomNumber = null, DateOnly? date = null, TimeOnly? endTime = null)
+    public void EditAssignment(
+        Guid assignmentId,
+        Guid classId,
+        Weekday weekday,
+        TimeOnly startTime,
+        string? lecturer = null,
+        string? address = null,
+        string? roomNumber = null,
+        ClassType? classType = null,
+        Mode? mode = null,
+        DateOnly? date = null,
+        TimeOnly? endTime = null)
     {
         var assignment = _context.Assignments.FirstOrDefault(a => a.Id == assignmentId);
         
@@ -92,14 +99,14 @@ public class AssignmentsRepository
             throw new InvalidOperationException("Assignment not found.");
         }
 
-        assignment.GroupId = groupId;
         assignment.ClassId = classId;
         assignment.Weekday = weekday;
         assignment.StartTime = startTime;
-        assignment.Type = assignmentType;
         assignment.Lecturer = lecturer;
         assignment.Address = address;
         assignment.RoomNumber = roomNumber;
+        assignment.ClassType = classType;
+        assignment.Mode = mode;
         assignment.Date = date;
         assignment.EndTime = endTime;
 

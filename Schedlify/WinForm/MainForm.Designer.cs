@@ -109,6 +109,7 @@
 
             // Прив'язка обробника події до кнопки "Реєстрація"
             registerButton.Click += new System.EventHandler(this.registrationButton_Click);
+            viewScheduleButton.Click += new System.EventHandler(this.viewScheduleButton_Click);
 
             // Налаштування форми
             this.ClientSize = new System.Drawing.Size(600, 300);
@@ -135,6 +136,12 @@
         {
             LoginForm loginForm = new LoginForm();
             loginForm.Show();
+            this.Hide(); // Закриваємо головне вікно
+        }
+        private void viewScheduleButton_Click(object sender, EventArgs e)
+        {
+            UniDepGroupFormUser unidepForm = new UniDepGroupFormUser();
+            unidepForm.Show();
             this.Hide(); // Закриваємо головне вікно
         }
     }

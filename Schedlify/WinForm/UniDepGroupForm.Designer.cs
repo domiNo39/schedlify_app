@@ -25,8 +25,7 @@ namespace Schedlify.WinForm
             // 
             // universityComboBox
             // 
-            this.universityComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            this.universityComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            
             this.universityComboBox.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.universityComboBox.FormattingEnabled = true;
             this.universityComboBox.Location = new System.Drawing.Point(200, 60);
@@ -35,8 +34,7 @@ namespace Schedlify.WinForm
             // 
             // departmentComboBox
             // 
-            this.departmentComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            this.departmentComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+           
             this.departmentComboBox.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.departmentComboBox.FormattingEnabled = true;
             this.departmentComboBox.Location = new System.Drawing.Point(200, 140);
@@ -45,8 +43,7 @@ namespace Schedlify.WinForm
             // 
             // groupComboBox
             // 
-            this.groupComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            this.groupComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            
             this.groupComboBox.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.groupComboBox.FormattingEnabled = true;
             this.groupComboBox.Location = new System.Drawing.Point(200, 220);
