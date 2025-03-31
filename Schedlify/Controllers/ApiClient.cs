@@ -24,7 +24,7 @@ namespace Schedlify.Controllers
         public async Task<T> GetAsync<T>(string endpoint, long userId, Dictionary<string, string> queryParams = null)
         {
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, BuildUrl(endpoint, queryParams));
-            requestMessage.Headers.Add("X-TG-UID", userId.ToString());
+            requestMessage.Headers.Add("X-CLIENT-UID", userId.ToString());
 
             var response = await _httpClient.SendAsync(requestMessage);
 
@@ -49,7 +49,7 @@ namespace Schedlify.Controllers
             {
                 Content = content
             };
-            requestMessage.Headers.Add("X-TG-UID", userId.ToString());
+            requestMessage.Headers.Add("X-CLIENT-UID", userId.ToString());
 
             var response = await _httpClient.SendAsync(requestMessage);
 
@@ -68,7 +68,7 @@ namespace Schedlify.Controllers
         {
             var url = $"{_baseUrl}{endpoint}";
             var requestMessage = new HttpRequestMessage(HttpMethod.Delete, url);
-            requestMessage.Headers.Add("X-TG-UID", userId.ToString());
+            requestMessage.Headers.Add("X-CLIENT-UID", userId.ToString());
 
             var response = await _httpClient.SendAsync(requestMessage);
 
