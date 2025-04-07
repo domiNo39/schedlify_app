@@ -47,7 +47,7 @@ namespace Schedlify.Controllers
 
         public async Task<Group?> GetByAdministratorId(long administratorId)
         { 
-            return (await _apiClient.GetAsync<List<Group>>($"/groups?administratorId={administratorId}", administratorId))[0];
+            return (await _apiClient.GetAsync<List<Group>>($"/groups?administratorId={administratorId}", administratorId)).FirstOrDefault();
         }
     }
 }

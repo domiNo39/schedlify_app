@@ -88,7 +88,10 @@ namespace Schedlify.WinForm
                 }
 
                 // Відкриваємо випадаючий список, якщо є результати
-                comboBox.DroppedDown = items.Any();
+                if (items.Length > 0)
+                {
+                    comboBox.DroppedDown = items.Any();
+                }
 
                 // Позиція курсора не змінюється
                 comboBox.SelectionStart = currentText.Length;
