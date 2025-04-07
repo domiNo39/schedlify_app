@@ -31,11 +31,20 @@ namespace Schedlify.Controllers
 
         public async Task<Class?> Add(long groupId, string name)
         {
+            var existingClasses = await GetByGroupId(groupId);
+            var existingClass = existingClasses?.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            
+            if (existingClass != null)
+            {
+                return existingClass; 
+            }
+
             var newClassData = new
             {
                 GroupId = groupId,
                 Name = name
             };
+
             return await _apiClient.PostAsync<Class>("/classes", _userId, newClassData);
         }
 

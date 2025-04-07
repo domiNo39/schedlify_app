@@ -1,4 +1,4 @@
-﻿
+﻿//COPYRIGHT NIGGERCODE
 using Schedlify.Global;
 using Schedlify.Models;
 
@@ -37,11 +37,20 @@ namespace Schedlify.Controllers
 
         public async Task<University?> Add(string name)
         {
-            var newUniversityData = new
+            var existingUniversities = await Search(name);
+
+            if (existingUniversities != null && existingUniversities.Any())
             {
-                Name = name
-            };
-            return await _apiClient.PostAsync<University>("/universities", _userId, newUniversityData);
+                return existingUniversities.First();
+            }
+            else
+            {
+                var newUniversityData = new
+                {
+                    Name = name
+                };
+                return await _apiClient.PostAsync<University>("/universities", _userId, newUniversityData);
+            }
         }
     }
 }

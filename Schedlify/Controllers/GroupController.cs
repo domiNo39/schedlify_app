@@ -41,8 +41,16 @@ namespace Schedlify.Controllers
                 AdministratorId = administratorId,
                 Name = name
             };
+            try
+            {
+                var exists = (await this.Search(departmentId, name))[0];
+                return exists;
 
-            return await _apiClient.PostAsync<Group>("/groups", GetCurrentUserId(), newGroupData);
+            }
+            catch (Exception ex)
+            {
+                return await _apiClient.PostAsync<Group>("/groups", GetCurrentUserId(), newGroupData);
+            }
         }
 
         public async Task<Group?> GetByAdministratorId(long administratorId)
