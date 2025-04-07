@@ -17,9 +17,4 @@ public class Department
     [StringLength(64)]
     public string Name { get; set; }
 
-    // Navigation properties
-    [ForeignKey("UniversityId")]
-    public University University { get; set; }
-    public ICollection<Group> Groups { get; set; }
-    public ICollection<TemplateSlot> TemplateSlots { get; set; }
 }

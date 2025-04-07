@@ -19,8 +19,14 @@ namespace Schedlify.WinForm
         {
             assignment = _assignment;
             InitializeComponent(_assignment);
+            this.Load += assignmentController_load;
+            _classController = new ClassController();
             assignmentController = new AssignmentController();
 
+        }
+        async private void assignmentController_load(object sender, EventArgs e)
+        {
+            this.className.Text = (await _classController.GetById(assignment.ClassId)).Name;
         }
         private void button2_Click(object sender, EventArgs e)
         {

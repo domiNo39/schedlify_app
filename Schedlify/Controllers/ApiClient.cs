@@ -30,11 +30,14 @@ namespace Schedlify.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+                //Console.WriteLine("Successful responce\n");
+                //Console.WriteLine(response);
                 var content = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<T>(content);
             }
             else
             {
+                //Console.WriteLine("Unsuccessful responce\n");
                 throw new ApiException(response.StatusCode, await response.Content.ReadAsStringAsync());
             }
         }
@@ -77,6 +80,11 @@ namespace Schedlify.Controllers
                 var responseData = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<T>(responseData);
             }
+            //else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            //{
+            //    Console.WriteLine("not found");
+            //    return null; //COPYRIGHT NIGGERCODE
+            //}
             else
             {
                 throw new ApiException(response.StatusCode, await response.Content.ReadAsStringAsync());

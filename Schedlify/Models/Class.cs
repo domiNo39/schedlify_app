@@ -16,8 +16,4 @@ public class Class
     [Required]
     public string Name { get; set; }
 
-    // Navigation properties
-    [ForeignKey("GroupId")]
-    public Group Group { get; set; }
-    public ICollection<Assignment> Assignments { get; set; }
 }

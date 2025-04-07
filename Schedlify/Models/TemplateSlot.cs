@@ -19,8 +19,4 @@ public class TemplateSlot
 
     [Required]
     public int ClassNumber { get; set; }
-
-    // Navigation properties
-    [ForeignKey("DepartmentId")]
-    public Department Department { get; set; }
 }

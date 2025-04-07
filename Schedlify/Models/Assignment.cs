@@ -35,10 +35,4 @@ public class Assignment
     [Column("Date")]
     public DateOnly? Date { get; set; }
 
-    // Navigation properties
-    [ForeignKey("GroupId")]
-    public Group Group { get; set; }
-
-    [ForeignKey("ClassId")]
-    public Class Class { get; set; }
 }

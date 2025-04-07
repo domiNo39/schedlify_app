@@ -30,9 +30,9 @@ namespace Schedlify.Controllers
         {
             var queryParams = new Dictionary<string, string>
             {
-                { "namePart", namePart }
+                { "s", namePart }
             };
-            return await _apiClient.GetAsync<List<University>>("/universities/search", _userId, queryParams);
+            return await _apiClient.GetAsync<List<University>>("/universities", _userId, queryParams);
         }
 
         public async Task<University?> Add(string name)

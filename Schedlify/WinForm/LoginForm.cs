@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Microsoft.IdentityModel.Tokens;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
 using Schedlify.Controllers;
 using Schedlify.Global;
 
@@ -11,6 +12,7 @@ namespace Schedlify.WinForm
         private UsersController _usersController;
         private GroupController _groupController;
         private TemplateSlotController _templateSlotController;
+        private DepartmentController _departmentController;
 
         public LoginForm()
         {
@@ -21,7 +23,7 @@ namespace Schedlify.WinForm
         }
 
         // Обробник події для кнопки "Увійти"
-        private void authButton_Click(object sender, EventArgs e)
+        async private void authButton_Click(object sender, EventArgs e)
         {
             string login = loginTextBox.Text;   // Отримуємо логін з поля
             string password = passwordTextBox.Text;  // Отримуємо пароль з поля
@@ -34,7 +36,7 @@ namespace Schedlify.WinForm
             }
 
             // Викликаємо метод Login з UsersController для перевірки введених даних
-            var user = _usersController.Login(login, password);
+            var user = await _usersController.Login(login, password);
 
             if (user != null)
             {
@@ -43,13 +45,14 @@ namespace Schedlify.WinForm
 
 
 
-                var group = _groupController.GetByAdministratorId(user.Id);
+                var group = await _groupController.GetByAdministratorId(user.Id);
 
                 if (group != null)
                 {
                     UserSession.currentGroup = group;
-                    UserSession.currentDepartment = group.Department;
-                    var timeSlots = _templateSlotController.GetByDepartmentId(group.DepartmentId);
+                    _departmentController = new DepartmentController();
+                    UserSession.currentDepartment = await _departmentController.GetById(group.DepartmentId);
+                    var timeSlots = await _templateSlotController.GetByDepartmentId(group.DepartmentId);
                     if (!timeSlots.IsNullOrEmpty())
                     {
                         ScheduleForm scheduleForm = new ScheduleForm();

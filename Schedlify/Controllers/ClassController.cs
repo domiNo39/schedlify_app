@@ -13,7 +13,6 @@ namespace Schedlify.Controllers
             _apiClient = new ApiClient();
             _userId = GetCurrentUserId();
         }
-
         public ClassController(ApiClient apiClient)
         {
             _apiClient = apiClient;
@@ -27,7 +26,7 @@ namespace Schedlify.Controllers
 
         public async Task<List<Class>> GetByGroupId(long groupId)
         {
-            return await _apiClient.GetAsync<List<Class>>($"/classes/by-group/{groupId}", _userId);
+            return await _apiClient.GetAsync<List<Class>>($"/classes?groupId={groupId}", _userId);
         }
 
         public async Task<Class?> Add(long groupId, string name)
@@ -61,6 +60,11 @@ namespace Schedlify.Controllers
                 Console.WriteLine($"Error deleting class {classId}: Status Code {ex.StatusCode}, Message: {ex.Message}");
                 return false;
             }
+        }
+
+        public async Task<Class> GetById(long classId)
+        {
+            return await _apiClient.GetAsync<Class>($"/classes/{classId}", _userId);
         }
     }
 }

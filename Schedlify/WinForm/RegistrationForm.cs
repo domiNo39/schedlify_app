@@ -18,7 +18,7 @@ namespace Schedlify.WinForm
         }
 
         // Обробник події для кнопки "Створити аккаунт"
-        private void createAccountButton_Click(object sender, EventArgs e)
+        async private void createAccountButton_Click(object sender, EventArgs e)
         {
             string login = loginTextBox.Text;   // Отримуємо логін з поля
             string password = passwordTextBox.Text;  // Отримуємо пароль з поля
@@ -35,7 +35,7 @@ namespace Schedlify.WinForm
             if (newUser != null)
             {
                 // Реєстрація успішна
-                UserSession.currentUser = newUser;
+                UserSession.currentUser = await newUser;
                 //this.Close(); // Закриваємо форму після успішної реєстрації
                 // Закриваємо поточне вікно
                 this.Close();

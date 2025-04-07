@@ -30,9 +30,9 @@ namespace Schedlify.Controllers
             var queryParams = new Dictionary<string, string>
             {
                 { "universityId", universityId.ToString() },
-                { "namePart", namePart }
+                { "s", namePart } // TODO: reference offset and limit values
             };
-            return await _apiClient.GetAsync<List<Department>>("/departments/search", _userId, queryParams);
+            return await _apiClient.GetAsync<List<Department>>("/departments", _userId, queryParams);
         }
 
         public async Task<Department?> Add(long universityId, string name)
@@ -43,6 +43,11 @@ namespace Schedlify.Controllers
                 Name = name
             };
             return await _apiClient.PostAsync<Department>("/departments", _userId, newDepartmentData);
+        }
+
+        public async Task<Department?> GetById(long id)
+        {
+            return await _apiClient.GetAsync<Department>($"/departments/{id}", _userId);
         }
     }
 }

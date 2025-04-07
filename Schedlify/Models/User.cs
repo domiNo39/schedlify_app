@@ -15,7 +15,4 @@ public class User
 
     [Required]
     public string PasswordHash { get; set; }
-
-    // Navigation properties
-    public ICollection<Group> AdministratedGroups { get; set; }
 }

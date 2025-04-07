@@ -12,6 +12,4 @@ public class University
     [StringLength(64)]
     public string Name { get; set; }
 
-    // Navigation properties
-    public ICollection<Department> Departments { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using Schedlify.Global;
+﻿//COPYRIGHT NIGGERCODE
+using Schedlify.Global;
 using Schedlify.Models;
 
 namespace Schedlify.Controllers
@@ -6,18 +7,15 @@ namespace Schedlify.Controllers
     public class GroupController
     {
         private readonly ApiClient _apiClient;
-        private readonly long _userId;
 
         public GroupController()
         {
             _apiClient = new ApiClient();
-            _userId = GetCurrentUserId();
         }
 
         public GroupController(ApiClient apiClient)
         {
             _apiClient = apiClient;
-            _userId = GetCurrentUserId();
         }
 
         private long GetCurrentUserId()
@@ -30,9 +28,9 @@ namespace Schedlify.Controllers
             var queryParams = new Dictionary<string, string>
             {
                 { "departmentId", departmentId.ToString() },
-                { "namePart", namePart }
+                { "s", namePart }
             };
-            return await _apiClient.GetAsync<List<Group>>("/groups/search", _userId, queryParams);
+            return await _apiClient.GetAsync<List<Group>>("/groups", GetCurrentUserId(), queryParams);
         }
 
         public async Task<Group?> Add(long departmentId, long administratorId, string name)
@@ -43,12 +41,13 @@ namespace Schedlify.Controllers
                 AdministratorId = administratorId,
                 Name = name
             };
-            return await _apiClient.PostAsync<Group>("/groups", _userId, newGroupData);
+
+            return await _apiClient.PostAsync<Group>("/groups", GetCurrentUserId(), newGroupData);
         }
 
         public async Task<Group?> GetByAdministratorId(long administratorId)
-        {
-            return await _apiClient.GetAsync<Group>($"/groups/by-administrator/{administratorId}", _userId);
+        { 
+            return (await _apiClient.GetAsync<List<Group>>($"/groups?administratorId={administratorId}", administratorId))[0];
         }
     }
 }

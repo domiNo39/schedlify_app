@@ -31,20 +31,20 @@ namespace Schedlify.Controllers
             return weekOfYear % 2 == 0;
         }
 
-        public async Task<List<Assignment>> GetByGroupIdAndDate(Guid groupId, DateOnly date)
+        public async Task<List<Assignment>> GetByGroupIdAndDate(long groupId, DateOnly date)
         {
             var queryParams = new Dictionary<string, string>
             {
                 { "groupId", groupId.ToString() },
                 { "date", date.ToString("yyyy-MM-dd") }
             };
-            return await _apiClient.GetAsync<List<Assignment>>("/assignments/by-group-date", _userId, queryParams);
+            return await _apiClient.GetAsync<List<Assignment>>("/assignments/by_group_id_and_date", _userId, queryParams);
         }
 
         public async Task<Assignment?> AddRegularAssignment(
             Weekday weekDay,
             int classNumber,
-            Guid classId,
+            long classId,
             string? lecturer = null,
             string? address = null,
             string? roomNumber = null,
@@ -72,7 +72,7 @@ namespace Schedlify.Controllers
         public async Task<Assignment?> AddIntervalAssignment(
             Weekday weekDay,
             int classNumber,
-            Guid classId,
+            long classId,
             AssignmentType assignmentType,
             string? lecturer = null,
             string? address = null,
@@ -87,7 +87,7 @@ namespace Schedlify.Controllers
                 ClassId = classId,
                 WeekDay = weekDay,
                 ClassNumber = classNumber,
-                AssignmentType = assignmentType,
+                Type = assignmentType,
                 Lecturer = lecturer,
                 Address = address,
                 RoomNumber = roomNumber,
@@ -101,7 +101,7 @@ namespace Schedlify.Controllers
         public async Task<Assignment?> AddSpecialAssignment(
             DateOnly date,
             int classNumber,
-            Guid classId,
+            long classId,
             string? lecturer = null,
             string? address = null,
             string? roomNumber = null,
@@ -126,7 +126,7 @@ namespace Schedlify.Controllers
             return await _apiClient.PostAsync<Assignment>("/assignments/special", _userId, newAssignmentData);
         }
 
-        public async Task Remove(Guid assignmentId)
+        public async Task Remove(long assignmentId)
         {
             await _apiClient.DeleteAsync<object>($"/assignments/{assignmentId}", _userId);
         }

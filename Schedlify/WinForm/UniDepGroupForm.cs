@@ -26,50 +26,50 @@ namespace Schedlify.WinForm
             departmentComboBox.TextChanged += DepartmentComboBox_TextChanged;
         }
 
-        private void UniversityComboBox_TextChanged(object sender, EventArgs e)
+        async private void UniversityComboBox_TextChanged(object sender, EventArgs e)
         {
-            UpdateComboBox(universityComboBox, input =>
+            UpdateComboBox(universityComboBox, async input =>
             {
-                var universities = _universityController.Search(input).ToList();
+                var universities = await _universityController.Search(input);
                 return universities.Select(u => u.Name).ToArray();
             });
         }
 
-        private void DepartmentComboBox_TextChanged(object sender, EventArgs e)
+        async private void DepartmentComboBox_TextChanged(object sender, EventArgs e)
         {
             if (universityComboBox.SelectedItem == null)
                 return;
 
-            var selectedUniversity = _universityController.Search(universityComboBox.Text).FirstOrDefault();
+            var selectedUniversity = (await _universityController.Search(universityComboBox.Text)).FirstOrDefault();
             if (selectedUniversity == null)
                 return;
 
-            UpdateComboBox(departmentComboBox, input =>
+            UpdateComboBox(departmentComboBox, async input =>
             {
-                var departments = _departmentController.Search(selectedUniversity.Id, input).ToList();
+                var departments = await _departmentController.Search(selectedUniversity.Id, input);
                 return departments.Select(d => d.Name).ToArray();
             });
         }
 
-        private void GroupComboBox_TextChanged(object sender, EventArgs e)
+        async private void GroupComboBox_TextChanged(object sender, EventArgs e)
         {
             if (departmentComboBox.SelectedItem == null)
                 return;
 
-            var selectedUniversity = _universityController.Search(universityComboBox.Text).FirstOrDefault();
-            var selectedDepartment = _departmentController.Search(selectedUniversity.Id, departmentComboBox.Text).FirstOrDefault();
+            var selectedUniversity = (await _universityController.Search(universityComboBox.Text)).FirstOrDefault();
+            var selectedDepartment = (await _departmentController.Search(selectedUniversity.Id, departmentComboBox.Text)).FirstOrDefault();
 
             if (selectedDepartment == null)
                 return;
 
-            UpdateComboBox(groupComboBox, input =>
+            UpdateComboBox(groupComboBox, async input =>
             {
-                var groups = _groupController.Search(selectedDepartment.Id, input).ToList();
+                var groups = await _groupController.Search(selectedDepartment.Id, input);
                 return groups.Select(g => g.Name).ToArray();
             });
         }
 
-        private void UpdateComboBox(ComboBox comboBox, Func<string, string[]> getItems)
+        async private void UpdateComboBox(ComboBox comboBox, Func<string, Task<string[]>> getSuggestions)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Schedlify.WinForm
                 string currentText = comboBox.Text;
 
                 // Викликаємо функцію для отримання відповідних елементів списку
-                var items = getItems(currentText);
+                var items = await getSuggestions(currentText);
 
                 // Забороняємо оновлювати сам текст в полі, лише випадаючий список
                 var previousItems = comboBox.Items.Cast<string>().ToArray();
@@ -100,7 +100,7 @@ namespace Schedlify.WinForm
         }
 
 
-        private void confirmSelectionButton_Click(object sender, EventArgs e)
+        async private void confirmSelectionButton_Click(object sender, EventArgs e)
         {
             // Перевірка, чи вибрані всі необхідні значення
             if (string.IsNullOrEmpty(universityComboBox.Text) ||
@@ -116,14 +116,14 @@ namespace Schedlify.WinForm
             string selectedDepartment = departmentComboBox.Text;
             string selectedGroup = groupComboBox.Text;
 
-            var university = _universityController.Add(selectedUniversity);
-            var department = _departmentController.Add(university.Id ,selectedDepartment);
-            var group = _groupController.Add(department.Id, UserSession.currentUser.Id, selectedGroup);
+            var university = await _universityController.Add(selectedUniversity);
+            var department = await _departmentController.Add(university.Id ,selectedDepartment);
+            var group = await _groupController.Add(department.Id, UserSession.currentUser.Id, selectedGroup);
 
             UserSession.currentUniversity = university;
             UserSession.currentDepartment = department;
             UserSession.currentGroup = group;
-            var slots = _templateSlotController.GetByDepartmentId(department.Id);
+            var slots = await _templateSlotController.GetByDepartmentId(department.Id);
             if (slots.Count() != 0)
             {
                 ScheduleForm scheduleForm = new ScheduleForm();
