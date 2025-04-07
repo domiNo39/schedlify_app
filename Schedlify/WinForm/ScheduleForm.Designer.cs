@@ -32,7 +32,7 @@ namespace Schedlify.WinForm
         /// Метод для ініціалізації компонентів
         /// </summary>
         /// 
-        private void InitializeTable(List<TemplateSlot> slots, AssignmentController assignmentController, DateOnly date) 
+        async private void InitializeTable(List<TemplateSlot> slots, AssignmentController assignmentController, DateOnly date) 
         {
             int rowsNum = slots.Count;
 
@@ -57,7 +57,7 @@ namespace Schedlify.WinForm
             for (int col = 0; col < tableLayoutPanel1.ColumnCount; col++) 
             {
 
-                List<Models.Assignment> assignmentsList = assignmentController.GetByGroupIdAndDate(UserSession.currentGroup.Id, date.AddDays(col));
+                List<Models.Assignment> assignmentsList = await assignmentController.GetByGroupIdAndDate(UserSession.currentGroup.Id, date.AddDays(col));
                 for (int row = 0; row < tableLayoutPanel1.RowCount; row++)
                 {
                     //if (assignmentsList.Count >= row + 1)

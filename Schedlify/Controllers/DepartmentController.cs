@@ -1,43 +1,53 @@
-﻿using Schedlify.Data;
+﻿using Schedlify.Global;
 using Schedlify.Models;
-using Schedlify.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Schedlify.Controllers
 {
     public class DepartmentController
     {
-        private readonly DepartmentRepository departmentRepository;
+        private readonly ApiClient _apiClient;
+        private readonly long _userId;
+
         public DepartmentController()
         {
-            ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
-            departmentRepository = new DepartmentRepository(_context);
+            _apiClient = new ApiClient();
+            _userId = GetCurrentUserId();
         }
-        
-        public DepartmentController(ApplicationDbContext context)
-        {
-            ApplicationDbContext _context = context;
-            departmentRepository = new DepartmentRepository(_context);
-        }
-        public List<Department> Search(Guid universityId,string namePart)
-        {
-            var departments = departmentRepository.GetByNamePartAndUniversityId(universityId, namePart);
-            return departments.ToList();
-        }
-        public Department? Add(Guid universityId, string name)
 
+        public DepartmentController(ApiClient apiClient)
         {
-            var existingDepartment = departmentRepository.GetByNameAndUniversityId(universityId, name);
-            if (existingDepartment != null)
+            _apiClient = apiClient;
+            _userId = GetCurrentUserId();
+        }
+
+        private long GetCurrentUserId()
+        {
+            return UserSession.currentUser.Id;
+        }
+
+        public async Task<List<Department>> Search(long universityId, string namePart)
+        {
+            var queryParams = new Dictionary<string, string>
             {
-                return existingDepartment;
-            }
-            var newDepartment = departmentRepository.Add(universityId, name);
-            return newDepartment;
+                { "universityId", universityId.ToString() },
+                { "s", namePart } // TODO: reference offset and limit values
+            };
+            return await _apiClient.GetAsync<List<Department>>("/departments", _userId, queryParams);
+        }
+
+        public async Task<Department?> Add(long universityId, string name)
+        {
+            var newDepartmentData = new
+            {
+                UniversityId = universityId,
+                Name = name
+            };
+            return await _apiClient.PostAsync<Department>("/departments", _userId, newDepartmentData);
+        }
+
+        public async Task<Department?> GetById(long id)
+        {
+            return await _apiClient.GetAsync<Department>($"/departments/{id}", _userId);
         }
     }
 }

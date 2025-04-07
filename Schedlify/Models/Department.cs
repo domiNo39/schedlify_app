@@ -8,18 +8,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Department
 {
     [Key]
-    public Guid Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
-    public Guid UniversityId { get; set; }
+    public long UniversityId { get; set; }
 
     [Required]
     [StringLength(64)]
     public string Name { get; set; }
 
-    // Navigation properties
-    [ForeignKey("UniversityId")]
-    public University University { get; set; }
-    public ICollection<Group> Groups { get; set; }
-    public ICollection<TemplateSlot> TemplateSlots { get; set; }
 }

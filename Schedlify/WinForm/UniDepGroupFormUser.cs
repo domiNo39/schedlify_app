@@ -22,12 +22,17 @@ namespace Schedlify.WinForm
             _universityController = new UniversityController();
             _departmentController = new DepartmentController();
             _groupController = new GroupController();
-            universities = _universityController.Search("");
+            this.Load += LoadUniController;
+
             List<string> universitiesNames = universities.Select(c => c.Name).ToList();
             universityComboBox.Items.AddRange(universitiesNames.ToArray());
             universityComboBox.SelectedIndex = 0;
         }
-
+        
+        async private void LoadUniController(object sender, EventArgs e)
+        {
+            universities = await _universityController.Search("");
+        }
 
         private void confirmSelectionButton_Click(object sender, EventArgs e)
         {
@@ -59,20 +64,18 @@ namespace Schedlify.WinForm
             this.Close();
         }
 
-        private void universityComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        async private void universityComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            departments = _departmentController.Search(universities[universityComboBox.SelectedIndex].Id, "");
+            departments = await _departmentController.Search(universities[universityComboBox.SelectedIndex].Id, "");
             departmentComboBox.Items.Clear();
             List<string> departmentsNames = departments.Select(c => c.Name).ToList();
             departmentComboBox.Items.AddRange(departmentsNames.ToArray());
             departmentComboBox.SelectedIndex = 0;
-
-
         }
 
-        private void departmentComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        async private void departmentComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            groups = _groupController.Search(departments[departmentComboBox.SelectedIndex].Id, "");
+            groups = await _groupController.Search(departments[departmentComboBox.SelectedIndex].Id, "");
             groupComboBox.Items.Clear();
             List<string> groupsNames = groups.Select(c => c.Name).ToList();
             groupComboBox.Items.AddRange(groupsNames.ToArray());

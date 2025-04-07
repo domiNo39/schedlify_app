@@ -1,5 +1,6 @@
 ﻿namespace Schedlify.WinForm
 {
+    using Schedlify.Controllers;
     using Schedlify.Global;
     partial class Assignment
     {
@@ -7,6 +8,7 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private ClassController _classController;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -29,7 +31,6 @@
         /// </summary>
         private void InitializeComponent(Models.Assignment assignment)
         {
-           
             startTime = new Label();
             className = new Label();
             classType = new Label();
@@ -57,7 +58,7 @@
             className.Name = "className";
             className.Size = new Size(226, 51);
             className.TabIndex = 1;
-            className.Text = assignment.Class.Name;
+            className.Text = "";
             //className.Click += this.label2_Click;
             // 
             // classType

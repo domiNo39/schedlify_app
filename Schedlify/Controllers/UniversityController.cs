@@ -1,44 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Schedlify.Data;
-using Schedlify.Repositories;
+﻿
+using Schedlify.Global;
 using Schedlify.Models;
 
 namespace Schedlify.Controllers
 {
     public class UniversityController
     {
-        private readonly UniversityRepository universityRepository;
+        private readonly ApiClient _apiClient;
+        private readonly long _userId;
+
         public UniversityController()
         {
-            ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
-            universityRepository = new UniversityRepository(_context);
-        }
-        public UniversityController(ApplicationDbContext context)
-        {
-            ApplicationDbContext _context = context;
-            universityRepository = new UniversityRepository(_context);
-        }
-        public List<University> Search(string namePart)
-        {
-            var universities = universityRepository.GetByNamePart(namePart);
-            return universities.ToList();
+            _apiClient = new ApiClient();
+            _userId = GetCurrentUserId();
         }
 
-        public University? Add(string name)
+        public UniversityController(ApiClient apiClient)
         {
-            var existingUniversity = universityRepository.GetByName(name);
-            if (existingUniversity != null)
+            _apiClient = apiClient;
+            _userId = GetCurrentUserId();
+        }
+
+        private long GetCurrentUserId()
+        {
+            return UserSession.currentUser.Id;
+        }
+
+        public async Task<List<University>> Search(string namePart)
+        {
+            var queryParams = new Dictionary<string, string>
             {
-                return existingUniversity;
-            }
+                { "s", namePart }
+            };
+            return await _apiClient.GetAsync<List<University>>("/universities", _userId, queryParams);
+        }
 
-            var newUniversity = universityRepository.Add(name);
-
-            return newUniversity; 
+        public async Task<University?> Add(string name)
+        {
+            var newUniversityData = new
+            {
+                Name = name
+            };
+            return await _apiClient.PostAsync<University>("/universities", _userId, newUniversityData);
         }
     }
 }

@@ -1,90 +1,78 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Schedlify.Data;
-using Schedlify.Repositories;
-using Schedlify.Models;
+﻿using Schedlify.Models;
 using Schedlify.Global;
-using Schedlify.Utils;
-using Schedlify.Migrations;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Schedlify.Controllers
 {
     public class AssignmentController
     {
-        private readonly AssignmentsRepository assigmentRepository;
-        private readonly TemplateSlotRepository templateSlotRepository;
+        private readonly ApiClient _apiClient;
+        private readonly long _userId;
+
         public AssignmentController()
         {
-            ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
-            this.assigmentRepository = new AssignmentsRepository(_context);
-            this.templateSlotRepository = new TemplateSlotRepository(_context);
+            _apiClient = new ApiClient();
+            _userId = GetCurrentUserId();
         }
-        public AssignmentController(ApplicationDbContext context)
+
+        public AssignmentController(ApiClient apiClient)
         {
-            ApplicationDbContext _context = context;
-            this.assigmentRepository = new AssignmentsRepository(_context);
-            this.templateSlotRepository = new TemplateSlotRepository(_context);
+            _apiClient = apiClient;
+            _userId = GetCurrentUserId();
         }
+
+        private long GetCurrentUserId()
+        {
+            return UserSession.currentUser.Id;
+        }
+
         public static bool IsEvenWeek(DateOnly date)
         {
-
             int weekOfYear = (date.DayOfYear - 1) / 7 + 1;
             return weekOfYear % 2 == 0;
         }
-        public List<Assignment> GetByGroupIdAndDate(Guid groupId, DateOnly date)
+
+        public async Task<List<Assignment>> GetByGroupIdAndDate(long groupId, DateOnly date)
         {
-            int dayOfWeek = (int)date.DayOfWeek; 
-            List<Assignment> regularAssignments = assigmentRepository.GetAssignmentsByWeekday(groupId, (Weekday)((dayOfWeek + 6) % 7), AssignmentType.Regular).ToList();
-            List<Assignment> intervalAssignments;
-            if (AssignmentController.IsEvenWeek(date))
+            var queryParams = new Dictionary<string, string>
             {
-                intervalAssignments = assigmentRepository.GetAssignmentsByWeekday(groupId, (Weekday)((dayOfWeek + 6) % 7), AssignmentType.Even).ToList();
-            }
-            else
-            {
-                intervalAssignments = assigmentRepository.GetAssignmentsByWeekday(groupId, (Weekday)((dayOfWeek + 6) % 7), AssignmentType.Odd).ToList();
-            }
-            List<Assignment> specialAssignments = assigmentRepository.GetAssignmentsByDate(groupId, date).ToList();
-            regularAssignments.RemoveAll(assignment =>specialAssignments.Any(p => p.StartTime == assignment.StartTime));
-            return regularAssignments.Concat(specialAssignments).Concat(intervalAssignments).OrderBy(p => p.StartTime).ToList();
-
-
+                { "groupId", groupId.ToString() },
+                { "date", date.ToString("yyyy-MM-dd") }
+            };
+            return await _apiClient.GetAsync<List<Assignment>>("/assignments/by_group_id_and_date", _userId, queryParams);
         }
-        public Assignment? AddRegularAssignment(
+
+        public async Task<Assignment?> AddRegularAssignment(
             Weekday weekDay,
             int classNumber,
-            Guid classId,
+            long classId,
             string? lecturer = null,
             string? address = null,
             string? roomNumber = null,
             ClassType? classType = null,
             Mode? mode = null)
         {
-            TemplateSlot slot = this.templateSlotRepository.GetByDepartmentIdAndClassNumber(UserSession.currentDepartment.Id, classNumber);
-            Assignment? newRegularAssignment = assigmentRepository.AddAssignment(
-                UserSession.currentGroup.Id,
-                classId,
-                weekDay,
-                slot.StartTime,
-                AssignmentType.Regular,
-                lecturer,
-                address,
-                roomNumber,
-                classType,
-                mode,
-                null,
-                slot.EndTime);
-            return newRegularAssignment;
+            var newAssignmentData = new
+            {
+                GroupId = UserSession.currentGroup.Id,
+                DepartmentId = UserSession.currentDepartment.Id,
+                ClassId = classId,
+                WeekDay = weekDay,
+                ClassNumber = classNumber,
+                AssignmentType = AssignmentType.Regular,
+                Lecturer = lecturer,
+                Address = address,
+                RoomNumber = roomNumber,
+                ClassType = classType,
+                Mode = mode
+            };
+
+            return await _apiClient.PostAsync<Assignment>("/assignments/regular", _userId, newAssignmentData);
         }
 
-        public Assignment? AddIntervalAssignment(
+        public async Task<Assignment?> AddIntervalAssignment(
             Weekday weekDay,
             int classNumber,
-            Guid classId,
+            long classId,
             AssignmentType assignmentType,
             string? lecturer = null,
             string? address = null,
@@ -92,57 +80,55 @@ namespace Schedlify.Controllers
             ClassType? classType = null,
             Mode? mode = null)
         {
-            TemplateSlot slot = this.templateSlotRepository.GetByDepartmentIdAndClassNumber(UserSession.currentDepartment.Id, classNumber);
-            Assignment? newRegularAssignment = assigmentRepository.AddAssignment(
-                UserSession.currentGroup.Id,
-                classId,
-                weekDay,
-                slot.StartTime,
-                assignmentType,
-                lecturer,
-                address,
-                roomNumber,
-                classType,
-                mode,
-                null,
-                slot.EndTime);
-            return newRegularAssignment;
+            var newAssignmentData = new
+            {
+                GroupId = UserSession.currentGroup.Id,
+                DepartmentId = UserSession.currentDepartment.Id,
+                ClassId = classId,
+                WeekDay = weekDay,
+                ClassNumber = classNumber,
+                Type = assignmentType,
+                Lecturer = lecturer,
+                Address = address,
+                RoomNumber = roomNumber,
+                ClassType = classType,
+                Mode = mode
+            };
+
+            return await _apiClient.PostAsync<Assignment>("/assignments/interval", _userId, newAssignmentData);
         }
 
-        public Assignment? AddSpecialAssignment(
+        public async Task<Assignment?> AddSpecialAssignment(
             DateOnly date,
             int classNumber,
-            Guid classId,
+            long classId,
             string? lecturer = null,
             string? address = null,
             string? roomNumber = null,
             ClassType? classType = null,
             Mode? mode = null)
         {
-            TemplateSlot slot = this.templateSlotRepository.GetByDepartmentIdAndClassNumber(UserSession.currentDepartment.Id, classNumber);
-            Assignment? newRegularAssignment = assigmentRepository.AddAssignment(
-                UserSession.currentGroup.Id,
-                classId,
-                (Weekday)(((int)date.DayOfWeek + 6) % 7),
-                slot.StartTime,
-                AssignmentType.Special,
-                lecturer,
-                address,
-                roomNumber,
-                classType,
-                mode,
-                date,
-                slot.EndTime);
-            return newRegularAssignment;
+            var newAssignmentData = new
+            {
+                GroupId = UserSession.currentGroup.Id,
+                DepartmentId = UserSession.currentDepartment.Id,
+                ClassId = classId,
+                Date = date,
+                ClassNumber = classNumber,
+                AssignmentType = AssignmentType.Special,
+                Lecturer = lecturer,
+                Address = address,
+                RoomNumber = roomNumber,
+                ClassType = classType,
+                Mode = mode
+            };
+
+            return await _apiClient.PostAsync<Assignment>("/assignments/special", _userId, newAssignmentData);
         }
-        public void Remove(Guid assignmentId)
+
+        public async Task Remove(long assignmentId)
         {
-            assigmentRepository.DeleteAssignment(assignmentId);
+            await _apiClient.DeleteAsync<object>($"/assignments/{assignmentId}", _userId);
         }
-
-
-
-
     }
-
 }

@@ -8,16 +8,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class Class
 {
     [Key]
-    public Guid Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
-    public Guid GroupId { get; set; }
+    public long GroupId { get; set; }
 
     [Required]
     public string Name { get; set; }
 
-    // Navigation properties
-    [ForeignKey("GroupId")]
-    public Group Group { get; set; }
-    public ICollection<Assignment> Assignments { get; set; }
 }

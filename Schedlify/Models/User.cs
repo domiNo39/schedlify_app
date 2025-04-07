@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 public class User
 {
     [Key]
-    public Guid Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
     [StringLength(32)]
@@ -15,7 +15,4 @@ public class User
 
     [Required]
     public string PasswordHash { get; set; }
-
-    // Navigation properties
-    public ICollection<Group> AdministratedGroups { get; set; }
 }

@@ -1,55 +1,70 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Schedlify.Data;
-using Schedlify.Repositories;
+﻿using Schedlify.Global;
 using Schedlify.Models;
-using Schedlify.Utils;
 
 namespace Schedlify.Controllers
 {
     public class ClassController
     {
-        private readonly ClassRepository classRepository;
+        private readonly ApiClient _apiClient;
+        private readonly long _userId;
+
         public ClassController()
         {
-            ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
-            classRepository = new ClassRepository(_context);
+            _apiClient = new ApiClient();
+            _userId = GetCurrentUserId();
         }
-        
-        public ClassController(ApplicationDbContext context)
+        public ClassController(ApiClient apiClient)
         {
-            ApplicationDbContext _context = context;
-            classRepository = new ClassRepository(_context);
+            _apiClient = apiClient;
+            _userId = GetCurrentUserId();
         }
-        
-        public List<Class> GetByGroupId(Guid groupId)
+
+        private long GetCurrentUserId()
         {
-            var templateSlots = classRepository.GetByGroupId(groupId);
-            return templateSlots.ToList();
+            return UserSession.currentUser.Id;
         }
 
-        public Class? Add(Guid groupId, string name)
+        public async Task<List<Class>> GetByGroupId(long groupId)
         {
-
-            var newClass=classRepository.Add(groupId,name);
-            return newClass;
+            return await _apiClient.GetAsync<List<Class>>($"/classes?groupId={groupId}", _userId);
         }
-        public Class? Edit(Guid classId, string name)
+
+        public async Task<Class?> Add(long groupId, string name)
         {
-
-            var editedClass = classRepository.EditById(classId, name);
-            return editedClass;
+            var newClassData = new
+            {
+                GroupId = groupId,
+                Name = name
+            };
+            return await _apiClient.PostAsync<Class>("/classes", _userId, newClassData);
         }
-        public bool Delete(Guid classId)
+
+        public async Task<Class?> Edit(long classId, string name)
         {
-            return classRepository.Remove(classId);
+            var updatedClassData = new
+            {
+                Name = name
+            };
+            return await _apiClient.PostAsync<Class>($"/classes/{classId}", _userId, updatedClassData);
         }
 
+        public async Task<bool> Delete(long classId)
+        {
+            try
+            {
+                await _apiClient.DeleteAsync<object>($"/classes/{classId}", _userId);
+                return true;
+            }
+            catch (ApiException ex)
+            {
+                Console.WriteLine($"Error deleting class {classId}: Status Code {ex.StatusCode}, Message: {ex.Message}");
+                return false;
+            }
+        }
 
-
+        public async Task<Class> GetById(long classId)
+        {
+            return await _apiClient.GetAsync<Class>($"/classes/{classId}", _userId);
+        }
     }
-
 }

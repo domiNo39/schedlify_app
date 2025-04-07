@@ -59,10 +59,10 @@ namespace Schedlify.WinForm
             classNumberLabel.Text = (_classNumber+1).ToString() + " пара";
         }
 
-        private void PopulateClassComboBox()
+        async private void PopulateClassComboBox()
         {
             // Приклад даних для предметів
-            classes = _classescontroller.GetByGroupId(UserSession.currentGroup.Id);
+            classes = await _classescontroller.GetByGroupId(UserSession.currentGroup.Id);
             List<string> classesNames = classes.Select(c => c.Name).ToList();
             classesComboBox.Items.AddRange(classesNames.ToArray());
             classesComboBox.SelectedIndex = 0; // Вибрати перший елемент за замовчуванням

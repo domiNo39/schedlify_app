@@ -1,7 +1,5 @@
 ﻿using Schedlify.Controllers;
 using Schedlify.Models;
-using System;
-using System.Windows.Forms;
 using Schedlify.Global;
 
 namespace Schedlify.WinForm
@@ -17,17 +15,23 @@ namespace Schedlify.WinForm
         {
             _assignmentController = new AssignmentController();
             _templateSlotController = new TemplateSlotController();
-            _templateSlots = _templateSlotController.GetByDepartmentId(UserSession.currentDepartment.Id);
            
             
             InitializeComponent();
+            this.Load += ScheduleFormLoad;
             var size = this.Size;
             AutoSize = false;
             this.Size = size;
-            InitializeTable(_templateSlots, _assignmentController, weekSelector1.CurrWeekStart);
             previousWeek = weekSelector1.CurrWeekStart;
             // Встановлюємо текст "Розклад"
             scheduleLabel.Text = "Розклад";
+        }
+
+
+        private async void ScheduleFormLoad(object? sender, EventArgs e)
+        {
+            _templateSlots = await _templateSlotController.GetByDepartmentId(UserSession.currentDepartment.Id);
+            InitializeTable(_templateSlots, _assignmentController, weekSelector1.CurrWeekStart);
         }
 
         private void label1_Click(object sender, EventArgs e)

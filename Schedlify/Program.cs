@@ -1,16 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Schedlify.Data;
-using System;
-using System.Windows.Forms;
 using Schedlify.WinForm;
-using Schedlify.Scripts;
-
-
 namespace Schedlify;
 using DotNetEnv;
-using Schedlify.Global;
-using System.Runtime.InteropServices;
 
 public class Program
 {
@@ -28,7 +18,7 @@ public class Program
       LoadEnv();
       if (args.Length > 0 && args[0] == "-s")
       {
-          Scripts.FillDb.Run();
+            Console.WriteLine("Warning! -s is deprecated. Continuing as usual");
       }
       else
       {

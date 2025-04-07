@@ -1,41 +1,53 @@
-﻿using Schedlify.Data;
+﻿//COPYRIGHT NIGGERCODE
+using Schedlify.Global;
 using Schedlify.Models;
-using Schedlify.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Schedlify.Controllers
 {
     public class GroupController
     {
-        private readonly GroupRepository groupRepository;
+        private readonly ApiClient _apiClient;
+
         public GroupController()
         {
-            ApplicationDbContext _context = ApplicationDbContextFactory.CreateDbContext();
-            groupRepository = new GroupRepository(_context);
+            _apiClient = new ApiClient();
         }
-        public GroupController(ApplicationDbContext context)
+
+        public GroupController(ApiClient apiClient)
         {
-            ApplicationDbContext _context = context;
-            groupRepository = new GroupRepository(_context);
+            _apiClient = apiClient;
         }
-        public List<Group> Search(Guid departmentId,string namePart)
+
+        private long GetCurrentUserId()
         {
-            var groups = groupRepository.GetByNamePartAndDepartmentId(namePart, departmentId);
-            return groups.ToList();
+            return UserSession.currentUser.Id;
         }
-        public Group? Add(Guid departmentId, Guid administratorId, string name)
+
+        public async Task<List<Group>> Search(long departmentId, string namePart)
         {
-            var newGroup = groupRepository.Add(departmentId, administratorId, name);
-            return newGroup;
+            var queryParams = new Dictionary<string, string>
+            {
+                { "departmentId", departmentId.ToString() },
+                { "s", namePart }
+            };
+            return await _apiClient.GetAsync<List<Group>>("/groups", GetCurrentUserId(), queryParams);
         }
-        public Group? GetByAdministratorId(Guid administratorId)
+
+        public async Task<Group?> Add(long departmentId, long administratorId, string name)
         {
-            var group = groupRepository.GetByAdministratorId(administratorId);
-            return group;
+            var newGroupData = new
+            {
+                DepartmentId = departmentId,
+                AdministratorId = administratorId,
+                Name = name
+            };
+
+            return await _apiClient.PostAsync<Group>("/groups", GetCurrentUserId(), newGroupData);
+        }
+
+        public async Task<Group?> GetByAdministratorId(long administratorId)
+        { 
+            return (await _apiClient.GetAsync<List<Group>>($"/groups?administratorId={administratorId}", administratorId))[0];
         }
     }
 }
